@@ -2,16 +2,17 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
 interface JwtPayload {
-  userId: string;
-  [key: string]: any;
+    _id: string;
+    role: string;
+    [key: string]: any;
 }
 
 declare global {
-  namespace Express {
-    interface Request {
-      user?: JwtPayload;
-    }
-  }
+    namespace Express {
+        interface Request {
+          user?: JwtPayload;
+        }
+      }
 }
 
 export function authenticateToken(req: Request, res: Response, next: NextFunction): void {
