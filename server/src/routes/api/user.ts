@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import { body, validationResult } from 'express-validator';
 import jwt from 'jsonwebtoken';
 import { appConfig } from '../../config';
+import { authenticateToken } from '../../middleware';
 import User, { IUser } from '../../models/user.model';
 
 const router = Router();
@@ -32,13 +33,20 @@ interface AuthTokens {
   refreshToken: string;
 }
 
-interface UserResponse  {
+interface UserResponse {
   _id: string;
   name: string;
   email: string;
   role: string;
   accessToken: string;
   refreshToken: string;
+}
+
+interface AuthenticatedRequest extends Request {
+  user?: {
+    userId: string;
+    [key: string]: any;
+  };
 }
 
 router.post(
@@ -94,36 +102,59 @@ router.post(
 );
 
 //login user
-router.post("/login", async (req: Request<{}, {}, LoginRequestBody>, res: Response): Promise<void> => {
-  try {
-    const { type, email, password, refreshToken } = req.body;
-    if (type === "email") {
-      const user = await User.findOne({ email: email });
-      if (!user) {
-         res.status(500).json({ message: "User not found" });
-         return;
-      }
-      if(!email || !password){
-          res.status(400).json({ message: "Email and password are required" });
+router.post(
+  '/login',
+  async (req: Request<{}, {}, LoginRequestBody>, res: Response): Promise<void> => {
+    try {
+      const { type, email, password, refreshToken } = req.body;
+      if (type === 'email') {
+        const user = await User.findOne({ email: email });
+        if (!user) {
+          res.status(500).json({ message: 'User not found' });
           return;
-      }
-      await handleEmailLogin({ password, user, res });
-    } else if (type === "refresh") {
-      if (!refreshToken) {
-         res.status(401).json({ message: "Refresh token not found" });
+        }
+        if (!email || !password) {
+          res.status(400).json({ message: 'Email and password are required' });
           return;
+        }
+        await handleEmailLogin({ password, user, res });
+      } else if (type === 'refresh') {
+        if (!refreshToken) {
+          res.status(401).json({ message: 'Refresh token not found' });
+          return;
+        } else {
+          await handleRefreshToken({ refreshToken, res });
+        }
       } else {
-        await handleRefreshToken({ refreshToken, res });
-      }
-    } else {
-       res.status(400).json({ message: "Invalid login type" });
+        res.status(400).json({ message: 'Invalid login type' });
         return;
+      }
+    } catch (error) {
+      res.status(500).json({ message: 'Something went wrong' });
     }
-  } catch (error) {
-    res.status(500).json({ message: "Something went wrong" });
   }
-});
+);
 
+//user profile
+router.get(
+  '/user-profile',
+  authenticateToken,
+  async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+    try {
+      const id = req.user?._id;
+      const user = await User.findById(id);
+      if (user) {
+        res.json(user);
+        return;
+      } else {
+        res.status(500).json({ message: 'User not found' });
+        return;
+      }
+    } catch (error) {
+      res.status(500).json({ message: 'Something went wrong' });
+    }
+  }
+);
 
 export default router;
 
@@ -146,7 +177,7 @@ async function handleEmailLogin(params: {
 async function generateUserObject(user: IUser): Promise<UserResponse> {
   const { accessToken, refreshToken } = generateToken(user);
   const userObj = user.toObject() as Omit<IUser, 'password'>;
-  
+
   return {
     ...userObj,
     _id: user._id.toString(),
@@ -154,7 +185,7 @@ async function generateUserObject(user: IUser): Promise<UserResponse> {
     email: user.email,
     role: user.role,
     accessToken,
-    refreshToken
+    refreshToken,
   };
 }
 
@@ -166,31 +197,19 @@ function generateToken(user: IUser): AuthTokens {
   const payload: TokenPayload = {
     email: user.email,
     _id: user._id.toString(),
-    role: user.role
+    role: user.role,
   };
 
-  const accessToken = jwt.sign(
-    payload,
-    appConfig.AUTH.JWT_SECRET,
-    { expiresIn: '1d' }
-  );
+  const accessToken = jwt.sign(payload, appConfig.AUTH.JWT_SECRET, { expiresIn: '1d' });
 
-  const refreshToken = jwt.sign(
-    payload,
-    appConfig.AUTH.JWT_SECRET,
-    { expiresIn: '30d' }
-  );
+  const refreshToken = jwt.sign(payload, appConfig.AUTH.JWT_SECRET, { expiresIn: '30d' });
 
   return { accessToken, refreshToken };
 }
 
-
-async function handleRefreshToken(params: {
-  refreshToken: string;
-  res: Response;
-}): Promise<void> {
+async function handleRefreshToken(params: { refreshToken: string; res: Response }): Promise<void> {
   const { refreshToken, res } = params;
-  
+
   if (!appConfig.AUTH.JWT_SECRET) {
     res.status(500).json({ message: 'Server configuration error' });
     return;
@@ -204,7 +223,7 @@ async function handleRefreshToken(params: {
 
     const typedPayload = payload as TokenPayload;
     const user = await User.findById(typedPayload._id);
-    
+
     if (!user) {
       res.status(404).json({ message: 'User not found' });
       return;
