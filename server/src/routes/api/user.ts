@@ -180,6 +180,20 @@ router.put(
   }
 );
 
+//delete user
+router.delete("/user-profile/:id", authenticateToken, async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  try {
+    const user = await User.findByIdAndDelete(req.params.id);
+    if (!user) {
+       res.status(404).json({ message: "User not found" });
+      return;
+    }
+    res.status(200).json({ message: "User deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+});
+
 export default router;
 
 async function handleEmailLogin(params: {
