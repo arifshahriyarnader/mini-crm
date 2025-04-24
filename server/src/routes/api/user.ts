@@ -181,18 +181,38 @@ router.put(
 );
 
 //delete user
-router.delete("/user-profile/:id", authenticateToken, async (req: AuthenticatedRequest, res: Response): Promise<void> => {
-  try {
-    const user = await User.findByIdAndDelete(req.params.id);
-    if (!user) {
-       res.status(404).json({ message: "User not found" });
-      return;
+router.delete(
+  '/user-profile/:id',
+  authenticateToken,
+  async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+    try {
+      const user = await User.findByIdAndDelete(req.params.id);
+      if (!user) {
+        res.status(404).json({ message: 'User not found' });
+        return;
+      }
+      res.status(200).json({ message: 'User deleted successfully' });
+    } catch (error) {
+      res.status(500).json({ message: 'Server error', error });
     }
-    res.status(200).json({ message: "User deleted successfully" });
+  }
+);
+
+//get all users admin only
+router.get("/", authenticateToken, async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  try {
+    if (req.user?.role != "admin") {
+      res.status(401).json({ message: "You  are not an admin" });
+      return;
+    } else {
+      const users = await User.find();
+      res.status(200).json(users);
+    }
   } catch (error) {
-    res.status(500).json({ message: "Server error", error });
+    res.status(500).json({ message: "Something went wrong" });
   }
 });
+
 
 export default router;
 
