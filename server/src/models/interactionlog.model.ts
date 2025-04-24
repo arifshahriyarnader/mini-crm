@@ -37,4 +37,6 @@ const interactionLogSchema = new Schema<IInteractionLog>(
   }
 );
 
+// const InteractionLog = model<IInteractionLog>('InteractionLog', interactionLogSchema);
+// export default InteractionLog;
 export default model<IInteractionLog>('InteractionLog', interactionLogSchema);
