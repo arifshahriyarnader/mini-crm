@@ -37,6 +37,4 @@ const clientSchema = new Schema<IClient>(
   }
 );
 
-// const Client = model<IClient>('Client', clientSchema);
-// export default Client;
 export default model<IClient>('Client', clientSchema);

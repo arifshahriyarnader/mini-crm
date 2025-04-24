@@ -31,6 +31,4 @@ const reminderSchema = new Schema<IReminder>(
   }
 );
 
-// const Reminder = model<IReminder>('Reminder', reminderSchema);
-// export default Reminder;
 export default model<IReminder>('Reminder', reminderSchema);

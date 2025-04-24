@@ -37,6 +37,4 @@ const projectSchema = new Schema<IProject>(
   { timestamps: true }
 );
 
-// const Project = model<IProject>('Project', projectSchema);
-// export default Project;
 export default model<IProject>('Project', projectSchema);
