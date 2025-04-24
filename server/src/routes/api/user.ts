@@ -156,6 +156,30 @@ router.get(
   }
 );
 
+//update user profile
+router.put(
+  '/:id',
+  authenticateToken,
+  async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+    try {
+      const id = req.params.id;
+      const userBody = req.body;
+      const updateUser = await User.findByIdAndUpdate(id, userBody, {
+        new: true,
+      });
+      if (updateUser) {
+        res.status(200).json(updateUser);
+        return;
+      } else {
+        res.status(404).json({ message: 'User not found' });
+        return;
+      }
+    } catch (error) {
+      res.status(500).json({ message: 'Server error', error });
+    }
+  }
+);
+
 export default router;
 
 async function handleEmailLogin(params: {
