@@ -70,7 +70,7 @@ export async function handleDeleteProfile(req: AuthenticatedRequest, res: Respon
 export async function handleGetAllUsers(req: AuthenticatedRequest, res: Response): Promise<void> {
   try {
     if (req.user?.role !== 'admin') {
-      res.status(403).json({ message: 'Forbidden' });
+      res.status(403).json({ message: 'You are not an admin' });
       return;
     }
 
