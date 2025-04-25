@@ -3,6 +3,7 @@ import {
   createProject,
   getAllProjectsByClientId,
   getAllProjectsForAllClients,
+  updateProject,
 } from '../services/project.service';
 import Client from '../models/client.model';
 import { Types } from 'mongoose';
@@ -75,6 +76,26 @@ export const getAllProjectsForAllClientsController = async (
     res.status(200).json({ message: 'Projects fetched successfully', projects });
   } catch (error) {
     console.error('Error fetching projects for user:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+
+export const updateProjectController = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id: projectId } = req.params;
+    const { title, budget, deadline, status } = req.body;
+
+    const updatedProject = await updateProject(projectId, { title, budget, deadline, status }, req.user!._id);
+
+    if (!updatedProject) {
+      res.status(404).json({ message: 'Project not found or unauthorized access' });
+      return;
+    }
+
+    res.status(200).json({ message: 'Project updated successfully', project: updatedProject });
+  } catch (error) {
+    console.error('Error updating project:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };

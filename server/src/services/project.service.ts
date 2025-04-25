@@ -10,6 +10,13 @@ interface CreateProjectInput {
   status: string;
 }
 
+interface UpdateProjectInput {
+  title?: string;
+  budget?: number;
+  deadline?: Date;
+  status?: string;
+}
+
 export const createProject = async (data: CreateProjectInput): Promise<IProject> => {
   const { clientId, title, budget, deadline, status } = data;
 
@@ -44,4 +51,30 @@ export const getAllProjectsForAllClients = async (userId: Types.ObjectId) => {
   const clientIds = clients.map((client) => client._id);
   const projects = await Project.find({ client: { $in: clientIds } }).populate('client');
   return projects;
+};
+
+export const updateProject = async (
+  projectId: string,
+  data: UpdateProjectInput,
+  userId: string
+): Promise<IProject | null> => {
+  if (!Types.ObjectId.isValid(projectId)) {
+    throw new Error('Invalid projectId format');
+  }
+
+  const clients = await Client.find({ user: userId }).select('_id');
+  const clientIds = clients.map((client) => client._id);
+
+  const updatedProject = await Project.findOneAndUpdate(
+    { _id: projectId, client: { $in: clientIds } },
+    {
+      ...(data.title && { title: data.title }),
+      ...(data.budget && { budget: data.budget }),
+      ...(data.deadline && { deadline: data.deadline }),
+      ...(data.status && { status: data.status }),
+    },
+    { new: true }
+  ).populate('client');
+
+  return updatedProject;
 };
