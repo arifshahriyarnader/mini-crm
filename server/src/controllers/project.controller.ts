@@ -1,5 +1,9 @@
 import { Request, Response } from 'express';
-import { createProject, getAllProjectsByClientId } from '../services/project.service';
+import {
+  createProject,
+  getAllProjectsByClientId,
+  getAllProjectsForAllClients,
+} from '../services/project.service';
 import Client from '../models/client.model';
 import { Types } from 'mongoose';
 
@@ -58,5 +62,19 @@ export const getAllProjectsByClientIdController = async (
   } catch (error) {
     console.error('Error fetching all projects:', error);
     res.status(500).json({ error: 'server error' });
+  }
+};
+
+export const getAllProjectsForAllClientsController = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const userId = new Types.ObjectId(req.user!._id);
+    const projects = await getAllProjectsForAllClients(userId);
+    res.status(200).json({ message: 'Projects fetched successfully', projects });
+  } catch (error) {
+    console.error('Error fetching projects for user:', error);
+    res.status(500).json({ message: 'Server error' });
   }
 };

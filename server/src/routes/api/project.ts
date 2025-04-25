@@ -4,8 +4,8 @@ import { authenticateToken } from '../../middleware';
 import {
   createProjectController,
   getAllProjectsByClientIdController,
+  getAllProjectsForAllClientsController,
 } from '../../controllers/project.controller';
-import { Client, Project } from '../../models';
 
 const router = Router();
 
@@ -16,18 +16,6 @@ router.post('/create-project', authenticateToken, createProjectController);
 router.get('/get-all-projects/:clientId', authenticateToken, getAllProjectsByClientIdController);
 
 //get all projects
-router.get('/get-all-projects', authenticateToken, async (req: Request, res: Response) => {
-  try {
-    const clients = await Client.find({ user: req.user!._id }).select('_id');
-    const clientIds = clients.map(client => client._id);
-    const projects = await Project.find({ client: { $in: clientIds } }).populate('client');
-    res.status(200).json({ message: 'Projects fetched successfully', projects });
-
-  } catch (error) {
-    console.error('Error fetching projects for user:', error);
-    res.status(500).json({ message: 'Server error' });
-  }
-});
-
+router.get('/get-all-projects', authenticateToken, getAllProjectsForAllClientsController);
 
 export default router;

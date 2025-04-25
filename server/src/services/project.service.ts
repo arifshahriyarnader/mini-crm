@@ -38,3 +38,10 @@ export const getAllProjectsByClientId = async (clientId: string, userId: string)
   const projects = await Project.find({ client: clientId }).populate('client');
   return projects;
 };
+
+export const getAllProjectsForAllClients = async (userId: Types.ObjectId) => {
+  const clients = await Client.find({ user: userId }).select('_id');
+  const clientIds = clients.map((client) => client._id);
+  const projects = await Project.find({ client: { $in: clientIds } }).populate('client');
+  return projects;
+};
