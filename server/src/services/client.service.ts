@@ -47,3 +47,8 @@ export const updateClientById = async (
   });
   return client;
 };
+
+
+export const deleteClientById=async(clientId:string, userId:Types.ObjectId) =>{
+  return await Client.findByIdAndDelete({ _id: clientId, userId });
+}
