@@ -25,3 +25,7 @@ export const createClient = async (data: createClientInput) => {
 export const getAllClients = async (userId: string) => {
   return await Client.find({ user: userId }).sort({ createdAt: -1 });
 };
+
+export const getClientbyId = async (clientId: string, userId: Types.ObjectId) => {
+  return await Client.findById({ _id: clientId, user: userId });
+};
