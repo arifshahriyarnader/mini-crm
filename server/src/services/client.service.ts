@@ -21,3 +21,7 @@ export const createClient = async (data: createClientInput) => {
   });
   return await newClient.save();
 };
+
+export const getAllClients = async (userId: string) => {
+  return await Client.find({ user: userId }).sort({ createdAt: -1 });
+};
