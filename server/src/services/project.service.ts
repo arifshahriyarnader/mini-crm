@@ -78,3 +78,20 @@ export const updateProject = async (
 
   return updatedProject;
 };
+
+export const deleteProject = async (projectId: string, userId: string) => {
+  if (!Types.ObjectId.isValid(projectId)) {
+    throw new Error('Invalid projectId format');
+  }
+  const clients = await Client.find({ user: userId }).select('_id');
+  const clientIds = clients.map((client) => client._id);
+
+  const projectToDelete = await Project.findOneAndDelete({
+    _id: projectId,
+    client: { $in: clientIds },
+  });
+  if (!projectToDelete) {
+    throw new Error('Project not found or unauthorized access');
+  }
+  return projectToDelete;
+};

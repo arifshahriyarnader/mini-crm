@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import {
   createProject,
+  deleteProject,
   getAllProjectsByClientId,
   getAllProjectsForAllClients,
   updateProject,
@@ -80,13 +81,16 @@ export const getAllProjectsForAllClientsController = async (
   }
 };
 
-
 export const updateProjectController = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id: projectId } = req.params;
     const { title, budget, deadline, status } = req.body;
 
-    const updatedProject = await updateProject(projectId, { title, budget, deadline, status }, req.user!._id);
+    const updatedProject = await updateProject(
+      projectId,
+      { title, budget, deadline, status },
+      req.user!._id
+    );
 
     if (!updatedProject) {
       res.status(404).json({ message: 'Project not found or unauthorized access' });
@@ -96,6 +100,17 @@ export const updateProjectController = async (req: Request, res: Response): Prom
     res.status(200).json({ message: 'Project updated successfully', project: updatedProject });
   } catch (error) {
     console.error('Error updating project:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+export const deleteProjectController = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id: projectId } = req.params;
+    await deleteProject(projectId, req.user!._id);
+    res.status(200).json({ message: 'Project deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting project:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };
