@@ -29,3 +29,12 @@ export const createProject = async (data: CreateProjectInput): Promise<IProject>
 
   return await newProject.save();
 };
+
+export const getAllProjectsByClientId = async (clientId: string, userId: string) => {
+  const client = await Client.findById({ _id: clientId, user: userId });
+  if (!client) {
+    throw new Error('Client not found or unauthorized access');
+  }
+  const projects = await Project.find({ client: clientId }).populate('client');
+  return projects;
+};

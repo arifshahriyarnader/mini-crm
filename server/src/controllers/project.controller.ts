@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { createProject } from '../services/project.service';
+import { createProject, getAllProjectsByClientId } from '../services/project.service';
 import Client from '../models/client.model';
 import { Types } from 'mongoose';
 
@@ -40,5 +40,23 @@ export const createProjectController = async (req: Request, res: Response): Prom
   } catch (error) {
     console.error('Error creating project:', error);
     res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+export const getAllProjectsByClientIdController = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { clientId } = req.params;
+    if (!Types.ObjectId.isValid(clientId)) {
+      res.status(400).json({ message: 'Invalid clientId format' });
+      return;
+    }
+    const projects = await getAllProjectsByClientId(clientId, req.user!._id);
+    res.status(200).json({ message: 'Projects fetched successfully', projects });
+  } catch (error) {
+    console.error('Error fetching all projects:', error);
+    res.status(500).json({ error: 'server error' });
   }
 };
