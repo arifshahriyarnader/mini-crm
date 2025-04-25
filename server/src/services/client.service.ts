@@ -29,3 +29,21 @@ export const getAllClients = async (userId: string) => {
 export const getClientbyId = async (clientId: string, userId: Types.ObjectId) => {
   return await Client.findById({ _id: clientId, user: userId });
 };
+
+export const updateClientById = async (
+  clientId: Types.ObjectId,
+  userId: Types.ObjectId,
+  data: {
+    name?: string;
+    email?: string;
+    phone?: string;
+    company?: string;
+    notes?: string;
+  }
+) => {
+  const client = await Client.findByIdAndUpdate({ _id: clientId, user: userId }, data, {
+    new: true,
+    runValidators: true,
+  });
+  return client;
+};
