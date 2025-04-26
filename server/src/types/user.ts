@@ -5,7 +5,7 @@ export interface RegisterRequestBody {
   name: string;
   email: string;
   password: string;
-  role: 'user' | 'admin';
+  role?: string;
 }
 
 export interface LoginRequestBody {

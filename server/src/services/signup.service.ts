@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User, { IUser } from '../models/user.model';
 import { RegisterRequestBody, UserResponse } from '../types/user';
-import { appConfig } from '../config'; 
+import { appConfig } from '../config';
 
 function generateToken(user: IUser): { accessToken: string; refreshToken: string } {
   const payload = {
@@ -23,7 +23,8 @@ function generateToken(user: IUser): { accessToken: string; refreshToken: string
 }
 
 export async function registerUser(userData: RegisterRequestBody): Promise<UserResponse> {
-  const { name, email, password, role } = userData;
+  const { name, email, password } = userData;
+  const role = userData.role || 'user';
   const existingUser = await User.findOne({ email });
 
   if (existingUser) {
@@ -31,6 +32,7 @@ export async function registerUser(userData: RegisterRequestBody): Promise<UserR
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
+
   const user = new User({ name, email, password: hashedPassword, role });
   await user.save();
 

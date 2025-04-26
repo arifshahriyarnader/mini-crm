@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { authServices } from "../../auth";
 
 interface SignupFormData {
   name: string;
@@ -13,12 +14,63 @@ const SignupForm = () => {
     email: "",
     password: "",
   });
-
+  const [honeypot, setHoneypot] = useState<string>("");
+  const navigate = useNavigate();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    if (e.target.name === "honeypot") {
+      setHoneypot(e.target.value);
+      return;
+    } else {
+      setFormData({
+        ...formData,
+        [e.target.name]: e.target.value,
+      });
+    }
+  };
+
+  //validate email format
+  const isValidEmail = (email: string) => {
+    return email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/) !== null;
+  };
+
+  //validdate password length
+  const isValidPassword = (password: string) => {
+    return password.length >= 6;
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("Signup data:", formData);
+    if (honeypot) {
+      console.log("Honeypot triggered!");
+      return;
+    }
+
+    if (!isValidEmail(formData.email)) {
+      alert("Invalid email format");
+      return;
+    }
+    if (!isValidPassword(formData.password)) {
+      alert("Password must be at least 6 characters long");
+      return;
+    }
+
+    const payload = {
+      name: formData.name,
+      email: formData.email,
+      password: formData.password,
+    };
+
+    try {
+      await authServices.signup(payload);
+      alert("Signup successful! Now you can login.");
+      setTimeout(() => {
+        navigate("/login");
+      });
+    } catch (error) {
+      console.error("Signup error:", error);
+      alert("Signup failed. Please try again.");
+    }
   };
 
   return (
@@ -32,7 +84,16 @@ const SignupForm = () => {
         </p>
       </div>
 
-      <form className="space-y-4">
+      <form className="space-y-4" onSubmit={handleSubmit}>
+        {/* Honeypot Field hidden from users */}
+        <input
+          type="text"
+          name="honeypot"
+          value={honeypot}
+          onChange={handleChange}
+          className="hidden"
+          autoComplete="off"
+        />
         <input
           type="text"
           name="name"
