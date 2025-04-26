@@ -6,7 +6,7 @@ import connectDB from "./db";
 import apiRoutes from './routes/api';
 
 const app: Application= express();
-app.use(cors());
+app.use(cors({origin: appConfig.ALLOWED_ORIGIN}));
 app.use(bodyParser.json());
 app.use(express.json());
 
