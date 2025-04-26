@@ -30,6 +30,7 @@ const interactionLogSchema = new Schema<IInteractionLog>(
     notes: {
       type: String,
       required: true,
+      trim: true,
     },
   },
   {
