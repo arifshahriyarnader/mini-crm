@@ -1,7 +1,14 @@
 import { useState } from "react";
+import { Link } from "react-router";
+
+interface SignupFormData {
+  name: string;
+  email: string;
+  password: string;
+}
 
 const SignupForm = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<SignupFormData>({
     name: "",
     email: "",
     password: "",
@@ -62,9 +69,9 @@ const SignupForm = () => {
 
       <p className="mt-4 text-center text-sm text-gray-600">
         Already have an account?{" "}
-        <a href="/login" className="text-blue-600 hover:underline">
+        <Link to="/login" className="text-[#5048E5] hover:underline">
           Login here
-        </a>
+        </Link>
       </p>
     </div>
   );
