@@ -19,3 +19,13 @@ export const createInterActionLog = async (data: CreateInteractionLogInput) => {
   });
   return await newLog.save();
 };
+
+export const getInteractionLogsByClientAndProject = async (clientId: string, projectId: string) => {
+  if (!clientId || !projectId) {
+    throw new Error('Both clientId and projectId are required');
+  }
+  const logs = await InteractionLog.find({ client: clientId, project: projectId }).sort({
+    date: -1,
+  });
+  return logs;
+};
