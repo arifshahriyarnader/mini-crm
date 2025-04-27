@@ -1,8 +1,8 @@
 export const sidebarLinks = [
-    { title: "Dashboard", href: "/" },
-    { title: "Clients", href: "/clients" },
-    { title: "Projects", href: "/projects" },
-    { title: "Interactions", href: "/interactions" },
-    { title: "Reminders", href: "/reminders" },
+    { title: "Dashboard", to: "/" },
+    { title: "Clients", to: "/clients" },
+    { title: "Projects", to: "/projects" },
+    { title: "Interactions", to: "/interactions" },
+   
   ];
   

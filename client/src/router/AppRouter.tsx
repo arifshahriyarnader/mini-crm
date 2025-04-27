@@ -1,5 +1,12 @@
 import { BrowserRouter, Route, Routes } from "react-router";
-import { DashboardPage, LoginFormPage, SignupPage } from "../pages";
+import {
+  ClientsPage,
+  DashboardPage,
+  InteractionsPage,
+  LoginFormPage,
+  ProjectsPage,
+  SignupPage,
+} from "../pages";
 
 import SecureRoute from "./SecureRoute";
 
@@ -14,6 +21,30 @@ const AppRouter = () => {
           element={
             <SecureRoute>
               <DashboardPage />
+            </SecureRoute>
+          }
+        />
+        <Route
+          path="/clients"
+          element={
+            <SecureRoute>
+              <ClientsPage />
+            </SecureRoute>
+          }
+        />
+        <Route
+          path="/projects"
+          element={
+            <SecureRoute>
+              <ProjectsPage />
+            </SecureRoute>
+          }
+        />
+        <Route
+          path="/interactions"
+          element={
+            <SecureRoute>
+              <InteractionsPage />
             </SecureRoute>
           }
         />

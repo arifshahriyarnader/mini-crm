@@ -49,10 +49,15 @@ export const Dashboard = () => {
           </h2>
 
           {sidebarLinks.map((link) => (
-            <SidebarLink key={link.title} title={link.title}
-            className={`${darkMode ? "text-[#5048E5] hover:text-[#fff]" : "text-gray-900 hover:text-[#5048E5]"}`}
-              
-             />
+            <SidebarLink
+              key={link.title}
+              title={link.title}
+              className={`${
+                darkMode
+                  ? "text-[#5048E5] hover:text-[#fff]"
+                  : "text-gray-900 hover:text-[#5048E5]"
+              }`}
+            />
           ))}
         </nav>
       </div>
