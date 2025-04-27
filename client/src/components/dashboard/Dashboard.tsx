@@ -59,7 +59,7 @@ export const Dashboard = () => {
           <div className="flex items-center gap-4 relative">
             <button
               onClick={toggleTheme}
-              className="p-2 bg-gray-200 dark:bg-gray-700 rounded-full"
+              className="p-2 bg-gray-200 dark:bg-gray-700 rounded-full cursor-pointer"
             >
               {darkMode ? <FaMoon /> : <FaSun />}
             </button>
@@ -67,7 +67,7 @@ export const Dashboard = () => {
             <div>
               <button
                 onClick={toggleProfileMenu}
-                className="p-2 bg-gray-200 dark:bg-gray-700 rounded-full"
+                className="p-2 bg-gray-200 dark:bg-gray-700 rounded-full cursor-pointer"
               >
                 <FaUserCircle size={24} />
               </button>
@@ -76,7 +76,9 @@ export const Dashboard = () => {
                 <div className="absolute right-0 mt-2 w-40 bg-white dark:bg-gray-700 rounded-md shadow-md p-2">
                   <button
                     onClick={handleLogout}
-                    className="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 rounded"
+                    className={`block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 rounded cursor-pointer ${
+                        darkMode ? "text-[#1A0817]" : "text-black"
+                      }`}
                   >
                     Logout
                   </button>
