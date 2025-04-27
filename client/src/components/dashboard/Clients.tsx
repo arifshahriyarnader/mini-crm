@@ -1,10 +1,13 @@
+import { Layout } from "../../components/index"
 
 
 export const Clients = () => {
   return (
-    <div>
-      <h1>Client</h1>
-    </div>
+    <Layout title="Clients">
+        <div>
+        <h2>Welcome to the Clients Page</h2>
+      </div>
+    </Layout>
   )
 }
 
