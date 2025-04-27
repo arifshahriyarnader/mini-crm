@@ -1,6 +1,11 @@
-export const SidebarLink = ({ title }: { title: string }) => {
+type SidebarLinkProps = {
+  title: string;
+  className?: string; 
+};
+
+export const SidebarLink = ({title,className}: SidebarLinkProps) => {
     return (
-      <a href="#" className="text-md font-medium text-gray-700 dark:text-white hover:text-[#5048E5] transition-colors">
+      <a href="#" className={`cursor-pointer ${className}`} >
         {title}
       </a>
     );

@@ -38,22 +38,29 @@ export const Dashboard = () => {
         darkMode ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"
       }`}
     >
-      <div className="w-64 bg-white dark:bg-gray-800 p-6 shadow-md">
+      <div
+        className={`w-64 p-6 shadow-md ${
+          darkMode ? "bg-gray-800 text-white" : "bg-white text-gray-900"
+        }`}
+      >
         <nav className="flex flex-col gap-6">
           <h2 className="text-2xl font-bold text-[#5048E5] mb-4">
             FreelancerCRM
           </h2>
 
           {sidebarLinks.map((link) => (
-            <SidebarLink key={link.title} title={link.title} />
+            <SidebarLink key={link.title} title={link.title}
+            className={`${darkMode ? "text-[#5048E5] hover:text-[#fff]" : "text-gray-900 hover:text-[#5048E5]"}`}
+              
+             />
           ))}
         </nav>
       </div>
 
       <div className="flex-1 flex flex-col">
-        <header className="flex justify-between items-center px-6 py-4 shadow-md bg-white dark:bg-gray-800">
+        <header className="flex justify-between items-center px-6 py-4 shadow-md dark:bg-gray-800">
           <div className="flex items-center gap-3">
-            <span className="text-lg font-medium">Dashboard</span>
+            <h1 className="text-lg font-medium mb-4">Dashboard</h1>
           </div>
 
           <div className="flex items-center gap-4 relative">
@@ -77,8 +84,8 @@ export const Dashboard = () => {
                   <button
                     onClick={handleLogout}
                     className={`block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 rounded cursor-pointer ${
-                        darkMode ? "text-[#1A0817]" : "text-black"
-                      }`}
+                      darkMode ? "text-[#1A0817]" : "text-black"
+                    }`}
                   >
                     Logout
                   </button>
@@ -102,7 +109,7 @@ export const Dashboard = () => {
 
           <section>
             <h2 className="text-xl font-bold mb-4">Upcoming Reminders</h2>
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">
+            <div className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg shadow-md p-4">
               <p>No upcoming reminders.</p>
             </div>
           </section>
