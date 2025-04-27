@@ -4,6 +4,8 @@ import { FaMoon, FaSun, FaUserCircle } from "react-icons/fa";
 import { sidebarLinks, summaryData } from "../../constants";
 import { SidebarLink } from "./SidebarLink";
 import { SummaryCard } from "./SummaryCard";
+import { appConfig } from "../../common/config";
+import { authServices } from "../../auth";
 
 export const Dashboard = () => {
   const navigate = useNavigate();
@@ -11,8 +13,14 @@ export const Dashboard = () => {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
   const handleLogout = () => {
-    localStorage.clear();
-    navigate("/login");
+    const user = localStorage.getItem(appConfig.CURRENT_USER_KEY);
+    if (user) {
+      authServices.logout();
+      localStorage.removeItem(appConfig.CURRENT_USER_KEY);
+      navigate("/login");
+    } else {
+      navigate("/login");
+    }
   };
 
   const toggleTheme = () => {
@@ -101,5 +109,3 @@ export const Dashboard = () => {
     </div>
   );
 };
-
-

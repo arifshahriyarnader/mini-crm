@@ -58,3 +58,8 @@ export const login = async (loggedUserData: LoginData) => {
     throw error;
   }
 };
+
+
+export const logout = () => {
+  localStorage.removeItem(appConfig.CURRENT_USER_KEY);
+};

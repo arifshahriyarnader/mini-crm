@@ -9,7 +9,7 @@ export interface LoginData {
     type: "email" | "refresh";
     email?: string;
     password?: string;
-    refreshToken?: string;
+    refreshToken?: string | null;
   }
 
   export interface AuthUser {
