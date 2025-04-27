@@ -12,6 +12,7 @@ export const Dashboard = () => {
             title={item.title}
             value={item.value}
             buttonText={item.buttonText}
+            route={item.route}
           />
         ))}
       </div>
