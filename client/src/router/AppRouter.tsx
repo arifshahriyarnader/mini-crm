@@ -1,8 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router";
-import { SignupPage } from "../pages";
-import LoginFormPage from "../pages/LoginFormPage";
-import DashboardPage from "../pages/DashboardPage";
+import { DashboardPage, LoginFormPage, SignupPage } from "../pages";
 
+import SecureRoute from "./SecureRoute";
 
 const AppRouter = () => {
   return (
@@ -10,8 +9,14 @@ const AppRouter = () => {
       <Routes>
         <Route path="/" element={<SignupPage />} />
         <Route path="/login" element={<LoginFormPage />} />
-        <Route path="/dashboard" element={<DashboardPage />} />
-       
+        <Route
+          path="/dashboard"
+          element={
+            <SecureRoute>
+              <DashboardPage />
+            </SecureRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

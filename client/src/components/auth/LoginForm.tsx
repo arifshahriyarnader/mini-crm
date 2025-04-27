@@ -9,7 +9,7 @@ interface LoginFormData {
   password: string;
 }
 
-const LoginForm = () => {
+export const LoginForm = () => {
   const [formData, setFormData] = useState<LoginFormData>({
     email: "",
     password: "",
@@ -83,4 +83,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+

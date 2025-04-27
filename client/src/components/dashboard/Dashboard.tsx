@@ -5,7 +5,7 @@ import { sidebarLinks, summaryData } from "../../constants";
 import { SidebarLink } from "./SidebarLink";
 import { SummaryCard } from "./SummaryCard";
 
-const Dashboard = () => {
+export const Dashboard = () => {
   const navigate = useNavigate();
   const [darkMode, setDarkMode] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
@@ -102,4 +102,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+

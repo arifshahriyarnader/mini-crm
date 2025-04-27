@@ -8,7 +8,7 @@ interface SignupFormData {
   password: string;
 }
 
-const SignupForm = () => {
+export const SignupForm = () => {
   const [formData, setFormData] = useState<SignupFormData>({
     name: "",
     email: "",
@@ -138,4 +138,4 @@ const SignupForm = () => {
   );
 };
 
-export default SignupForm;
+
