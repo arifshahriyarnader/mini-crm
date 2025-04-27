@@ -1,2 +1,2 @@
 export * from "./sidebarLinks"
-export * from "./summaryData"
+export * from "./staticSummaryData"
