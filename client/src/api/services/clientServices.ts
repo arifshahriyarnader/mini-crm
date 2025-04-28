@@ -8,3 +8,12 @@ export const getAllTotalClients = async () => {
     console.log(error);
   }
 };
+
+export const getAllClients = async () => {
+  try {
+    const response = await http.get("/api/client/all-clients");
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
