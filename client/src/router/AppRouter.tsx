@@ -3,12 +3,14 @@ import {
   ClientsPage,
   DashboardPage,
   InteractionsPage,
+  ReminderPage,
   LoginFormPage,
   ProjectsPage,
   SignupPage,
 } from "../pages";
 
 import SecureRoute from "./SecureRoute";
+
 
 const AppRouter = () => {
   return (
@@ -48,6 +50,7 @@ const AppRouter = () => {
             </SecureRoute>
           }
         />
+        <Route path="/reminders" element={<SecureRoute><ReminderPage /></SecureRoute>} />
       </Routes>
     </BrowserRouter>
   );

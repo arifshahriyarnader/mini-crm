@@ -9,3 +9,15 @@ export const totalProjectsCount = async () => {
     return 0;
   }
 };
+
+export const reminderDueSoon = async() => {
+  try{
+const response= await http.get("/api/reminder/get-reminder/due-this-week");
+return response.data.reminders.length
+
+  }
+  catch(error){
+    console.error("Failed to fetch  reminders", error);
+    return 0;
+  }
+}
