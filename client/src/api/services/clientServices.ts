@@ -17,3 +17,27 @@ export const getAllClients = async () => {
     console.log(error);
   }
 };
+
+export const addClient = async (data:{name: string;
+  email: string;
+  phone: string;
+  company?: string;
+  notes?: string;}) => {
+  try {
+    const response = await http.post("/api/client/create-client",data);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteClient =async(id: string) =>{
+  try{
+    const response= await http.delete(`/api/client/delete-client/${id}`)
+    return response;
+  }
+  catch(error){
+    console.log(error)
+    throw error;
+  }
+}

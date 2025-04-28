@@ -1,5 +1,6 @@
-import { Link } from "react-router";
 import { useState } from "react";
+import { Link, useNavigate } from "react-router";
+import { addClient } from "../api/services";
 
 export const AddClientFormPage = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +10,7 @@ export const AddClientFormPage = () => {
     company: "",
     notes: "",
   });
+  const navigate=useNavigate()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -17,9 +19,31 @@ export const AddClientFormPage = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async(e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form Data Submitted:", formData);
+    try{
+      const response=await addClient(formData)
+      console.log("client added:", response);
+      if (response?.status === 201) {
+        alert("Client Added Successfully");
+        navigate("/clients");
+      } else {
+        alert("Client addition failed");
+      }
+
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        company: "",
+        notes: "",
+      });
+
+    }
+    catch(error){
+      console.error("Failed to add client:", error);
+    }
+
    
   };
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { FaEdit } from "react-icons/fa";
 import { FiTrash2 } from "react-icons/fi";
+import { deleteClient } from "../../api/services";
 
 interface Client {
   id: string;
@@ -13,9 +14,32 @@ interface Client {
 
 interface ClientTableProps {
   clients: Client[];
+  setClients: React.Dispatch<React.SetStateAction<Client[]>>;
 }
 
-export const ClientTable: React.FC<ClientTableProps> = ({ clients }) => {
+export const ClientTable: React.FC<ClientTableProps> = ({ clients,setClients }) => {
+  const handleDelete = async (id: string) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this client?"
+    );
+    if (confirmDelete) {
+      try {
+        const response = await deleteClient(id);
+        console.log("Clients deleted", response)
+        if (response?.status === 200) {
+          alert("Client deleted successfully");
+          setClients(prevClients => prevClients.filter(client => client.id !== id)); 
+        } else {
+          alert("Failed to delete client");
+        }
+      } catch (error) {
+        console.error("Delete error:", error);
+        alert("Something went wrong during deletion");
+      }
+    }
+  };
+  
+  
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full bg-white border border-gray-300">
@@ -48,7 +72,10 @@ export const ClientTable: React.FC<ClientTableProps> = ({ clients }) => {
                   <FaEdit size={20} />
                 </button>
 
-                <button className="text-red-500 cursor-pointer">
+                <button
+                  className="text-red-500 cursor-pointer"
+                  onClick={() => handleDelete(client.id)}
+                >
                   <FiTrash2 size={20} />
                 </button>
               </td>

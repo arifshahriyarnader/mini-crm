@@ -27,7 +27,7 @@ export const Clients: React.FC = () => {
       const response = await getAllClients();
       setClients(response);
       console.log("All Clients:", response);
-      return response.data;
+      return response
     } catch (error) {
       console.error("Failed to fetch clients:", error);
     }
@@ -48,7 +48,7 @@ export const Clients: React.FC = () => {
           <span>Add Client</span>
         </button>
       </div>
-      <ClientTable clients={clients} />
+      <ClientTable clients={clients} setClients={setClients} />
     </Layout>
   );
 };
