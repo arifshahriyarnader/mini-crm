@@ -30,7 +30,7 @@ export const SignupForm = () => {
 
   //validate email format
   const isValidEmail = (email: string) => {
-    return email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/) !== null;
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
 
   //validdate password length
@@ -46,10 +46,16 @@ export const SignupForm = () => {
       return;
     }
 
+    if (!formData.email) {
+      alert("Email is required");
+      return;
+    }
+
     if (!isValidEmail(formData.email)) {
       alert("Invalid email format");
       return;
     }
+
     if (!isValidPassword(formData.password)) {
       alert("Password must be at least 6 characters long");
       return;
@@ -84,7 +90,7 @@ export const SignupForm = () => {
         </p>
       </div>
 
-      <form className="space-y-4" onSubmit={handleSubmit}>
+      <form className="space-y-4" onSubmit={handleSubmit} noValidate>
         {/* Honeypot Field hidden from users */}
         <input
           type="text"
@@ -137,5 +143,3 @@ export const SignupForm = () => {
     </div>
   );
 };
-
-
