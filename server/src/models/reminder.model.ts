@@ -1,6 +1,7 @@
 import { Schema, Types, model, Document } from 'mongoose';
 
 export interface IReminder extends Document {
+  user: Types.ObjectId;
   client?: Types.ObjectId;
   project?: Types.ObjectId;
   message: string;
@@ -9,6 +10,11 @@ export interface IReminder extends Document {
 
 const reminderSchema = new Schema<IReminder>(
   {
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
     client: {
       type: Schema.Types.ObjectId,
       ref: 'Client',

@@ -25,6 +25,7 @@ export const Clients: React.FC = () => {
   const fetchAllClients = async () => {
     try {
       const response = await getAllClients();
+     
       setClients(response);
       console.log("All Clients:", response);
       return response
