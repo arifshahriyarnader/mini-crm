@@ -24,6 +24,6 @@ export const staticSummaryData: SummaryItem[] = [
   {
     title: "Projects by Status",
     buttonText: "View Projects by Status",
-    route: "/projects-by-status",
+    route: "/projects",
   },
 ];
