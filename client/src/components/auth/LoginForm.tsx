@@ -67,7 +67,7 @@ export const LoginForm = () => {
         />
         <button
           type="submit"
-          className="bg-[#5048E5] text-white py-3 rounded-md hover:bg-indigo-700 font-semibold"
+          className="bg-[#5048E5] text-white py-3 rounded-md hover:bg-indigo-700 font-semibold cursor-pointer"
         >
           Log In
         </button>
@@ -82,5 +82,3 @@ export const LoginForm = () => {
     </div>
   );
 };
-
-

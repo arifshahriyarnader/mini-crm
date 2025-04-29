@@ -40,7 +40,7 @@ export const Projects = () => {
   return (
     <Layout title="Projects">
       {projects.length > 0 ? (
-        <ProjectTable projects={projects} />
+        <ProjectTable projects={projects} setProjects={setProjects} />
       ) : (
         <div className="text-center py-8">
           <p>No projects found</p>

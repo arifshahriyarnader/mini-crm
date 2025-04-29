@@ -127,7 +127,7 @@ export const SignupForm = () => {
 
         <button
           type="submit"
-          className="w-full rounded-md p-2 font-semibold text-white"
+          className="w-full rounded-md p-2 font-semibold text-white cursor-pointer"
           style={{ backgroundColor: "#5048E5" }}
         >
           Sign Up

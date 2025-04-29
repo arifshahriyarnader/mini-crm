@@ -14,24 +14,29 @@ interface Project {
 
 interface ProjectTableProps {
   projects: Project[];
- 
+  setProjects: React.Dispatch<React.SetStateAction<Project[]>>;
 }
 
-export const ProjectTable: React.FC<ProjectTableProps> = ({ projects}) => {
+export const ProjectTable: React.FC<ProjectTableProps> = ({
+  projects,
+  setProjects,
+}) => {
   const handleDelete = async (_id: string) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this project?");
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this project?"
+    );
     if (!confirmDelete) return;
-  
+
     try {
       await deleteProject(_id);
+      setProjects((prev) => prev.filter((project) => project._id !== _id));
       alert("Project deleted successfully");
-     
     } catch (error) {
-      console.log(error)
+      console.log(error);
       alert("Failed to delete project");
     }
   };
-  
+
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full bg-white border border-gray-300">
@@ -60,7 +65,10 @@ export const ProjectTable: React.FC<ProjectTableProps> = ({ projects}) => {
                   <FaEdit size={20} />
                 </button>
 
-                <button className="text-red-500 cursor-pointer" onClick={() => handleDelete(project._id)}>
+                <button
+                  className="text-red-500 cursor-pointer"
+                  onClick={() => handleDelete(project._id)}
+                >
                   <FiTrash2 size={20} />
                 </button>
               </td>
