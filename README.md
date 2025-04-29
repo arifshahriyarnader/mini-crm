@@ -2,10 +2,10 @@
     - This project is a Mini CRM (Client Relationship Management) system for freelancers to manage their clients, projects, interaction logs, and reminders.
 
 ## Tech Stack Used
-    - **Client**: React JS, TypeScript, Tailwind CSS
-    - **Server**: Node JS, Express JS, TypeScript
-    - **Database**: MongoDB (Mongoose ORM)
-    - **API Testing**: Postman
+    - Client: React JS, TypeScript, Tailwind CSS
+    - Server: Node JS, Express JS, TypeScript
+    - Database: MongoDB (Mongoose ORM)
+    - API Testing: Postman
 
 ## Set Up Insstruction
 
@@ -106,5 +106,58 @@
 - createdAt
 - updatedAt
 
+## Summary of Approach
+    - Authentication: Implemented using JWT tokens with access and refresh tokens.
+    - Modular Code Structure: Organized backend using routes, controllers, services, and   middlewares for scalability.
+    - State Management: Managed frontend state locally in React components for simplicity.
+    - Data Fetching: Used Axios for API requests.
+    - Error Handling: Basic try-catch error handling and user alerts on the client side.
+    - Mobile Responsive UI: Built using Tailwind CSS for fast and clean designs.
 
+## Sample Test User
+    -You can either sign up through the signup page, or use the following test credentials:
+    ```bash
+    Email: testuser@example.com
+    Password: Test1234
 
+## Decisions and Reasoning
+**Theme Preference Persistence**:  
+- I implemented theme persistence using `localStorage`.
+- On page load (`useEffect`), I check if `"darkMode"` is saved in `localStorage`, and add or remove the `dark` class on the `<html>` element accordingly.
+- When the user logs out, I clean up by removing `"darkMode"` from `localStorage`.
+
+**Dashboard Data Visualization**:  
+- Since dashboard data visualization was open-ended, I focused on displaying clear tables for Clients.
+- I will use libraries like `Recharts` or `Chart.js` for advanced visualization to show project statistics or earnings graphs. 
+
+**Folder/Module Structure**:
+    ```bash
+    server/
+        src/
+        routes/
+        controllers/
+        services/
+        models/
+        middlewares/
+    
+    ```bash
+    client/
+        src/
+        api/
+            services/
+        common/
+            config/
+            https/
+        auth/
+        components/
+        pages/
+        router/
+
+## Final Notes
+    - Project is mobile responsive.
+    - Code is modular and easy to maintain.
+    - The theme preference is persisted across sessions.
+    - API is tested via Postman collections.
+    - Future improvements can include advanced analytics on the dashboard.
+
+# Thank you
