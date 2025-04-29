@@ -9,7 +9,7 @@
 - **Database**: MongoDB (Mongoose ORM)
 - **API Testing**: Postman
 
-## Set Up Insstruction
+## Set Up Instruction
 
 ### Backend Setup
 
@@ -130,7 +130,7 @@
 - When the user logs out, I clean up by removing `"darkMode"` from `localStorage`.
 
 **Dashboard Data Visualization**:  
-- Since dashboard data visualization was open-ended, I focused on displaying clear tables for Clients.
+- Since dashboard data visualization was open-ended, I focused on displaying clear tables for Clients and projects.
 - I will use libraries like `Recharts` or `Chart.js` for advanced visualization to show project statistics or earnings graphs. 
 
 ## Folder/Module Structure

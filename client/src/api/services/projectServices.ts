@@ -4,6 +4,23 @@ interface Project {
   status: "pending" | "in-progress" | "completed" | string;
 }
 
+interface Projects {
+  _id: string;
+  clientName: string;
+  title: string;
+  budget: number;
+  deadline: string;
+  status: "pending" | "in-progress" | "completed";
+}
+
+interface ApiProject {
+  _id: string;
+  client: { _id: string; name: string };
+  title: string;
+  budget: number;
+  deadline: string;
+  status: "pending" | "in-progress" | "completed";
+}
 export const totalProjectsCount = async () => {
   try {
     const response = await http.get("/api/project/get-all-projects");
@@ -56,5 +73,24 @@ export const totalProjectStatus = async (): Promise<{
       counts: { pending: 0, "in-progress": 0, completed: 0 },
       total: 0,
     };
+  }
+};
+
+
+export const getAllProjects = async (): Promise<Projects[]> => {
+  try {
+    const response = await http.get<{ message: string; projects: ApiProject[] }>("/api/project/get-all-projects");
+
+    return response.data.projects.map((project) => ({
+      _id: project._id,
+      clientName: project.client.name,
+      title: project.title,
+      budget: project.budget,
+      deadline: new Date(project.deadline).toISOString().split("T")[0],
+      status: project.status,
+    }));
+  } catch (error) {
+    console.error("Failed to fetch projects:", error);
+    return [];
   }
 };
