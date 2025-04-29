@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { Layout } from "../components/layout/Layout";
 import { useEffect, useState } from "react";
 import { clientProfile } from "../api/services";
@@ -14,6 +14,7 @@ interface Client {
 export const ClientProfilePage = () => {
   const { id } = useParams<{ id: string }>();
   const [client, setClient] = useState<Client | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchClientProfile = async () => {
@@ -27,6 +28,10 @@ export const ClientProfilePage = () => {
 
     if (id) fetchClientProfile();
   }, [id]);
+
+  const handleProject = () => {
+    navigate("/add-project");
+  };
 
   return (
     <Layout title="Client Profile">
@@ -51,7 +56,10 @@ export const ClientProfilePage = () => {
                 <td className="p-2">{client.company || "N/A"}</td>
                 <td className="p-2">{client.notes || "N/A"}</td>
                 <td className="p-2 flex gap-2">
-                  <button className="bg-[#5048E5] text-white px-2 py-1 rounded cursor-pointer">
+                  <button
+                    className="bg-[#5048E5] text-white px-2 py-1 rounded cursor-pointer"
+                    onClick={handleProject}
+                  >
                     Add Project
                   </button>
                 </td>

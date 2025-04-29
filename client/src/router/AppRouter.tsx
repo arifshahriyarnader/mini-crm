@@ -9,10 +9,10 @@ import {
   SignupPage,
   AddClientFormPage,
   ClientProfilePage,
+  AddProjectForm,
 } from "../pages";
 
 import SecureRoute from "./SecureRoute";
-
 
 const AppRouter = () => {
   return (
@@ -44,12 +44,27 @@ const AppRouter = () => {
             </SecureRoute>
           }
         />
-        <Route path="/client-profile/:id" element={<SecureRoute><ClientProfilePage /></SecureRoute>} />
+        <Route
+          path="/client-profile/:id"
+          element={
+            <SecureRoute>
+              <ClientProfilePage />
+            </SecureRoute>
+          }
+        />
         <Route
           path="/projects"
           element={
             <SecureRoute>
               <ProjectsPage />
+            </SecureRoute>
+          }
+        />
+        <Route
+          path="/add-project"
+          element={
+            <SecureRoute>
+              <AddProjectForm />
             </SecureRoute>
           }
         />
@@ -61,7 +76,14 @@ const AppRouter = () => {
             </SecureRoute>
           }
         />
-        <Route path="/reminders" element={<SecureRoute><ReminderPage /></SecureRoute>} />
+        <Route
+          path="/reminders"
+          element={
+            <SecureRoute>
+              <ReminderPage />
+            </SecureRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

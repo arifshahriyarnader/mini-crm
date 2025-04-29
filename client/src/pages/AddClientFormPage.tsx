@@ -109,7 +109,7 @@ export const AddClientFormPage = () => {
 
           <button
             type="submit"
-            className="w-full bg-[#5048E5] hover:bg-indigo-700 text-white py-2 px-4 rounded-md"
+            className="w-full cursor-pointer bg-[#5048E5] hover:bg-indigo-700 text-white py-2 px-4 rounded-md"
           >
             Add Client
           </button>
