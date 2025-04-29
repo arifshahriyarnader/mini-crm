@@ -94,3 +94,14 @@ export const getAllProjects = async (): Promise<Projects[]> => {
     return [];
   }
 };
+
+export const deleteProject=async(id:string) =>{
+  try{
+    const response=await http.delete(`/api/project/delete-project/${id}`)
+    return response.data;
+  }
+  catch(error){
+    console.error("Delete error:", error);
+    throw error;
+  }
+}
