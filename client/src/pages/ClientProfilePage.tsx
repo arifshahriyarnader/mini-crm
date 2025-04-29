@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { clientProfile } from "../api/services";
 
 interface Client {
+  _id: string;
   name: string;
   email: string;
   phone: string;
@@ -29,8 +30,8 @@ export const ClientProfilePage = () => {
     if (id) fetchClientProfile();
   }, [id]);
 
-  const handleProject = () => {
-    navigate("/add-project");
+  const handleProject = (clientId: string) => {
+    navigate(`/add-project/${clientId}`);
   };
 
   return (
@@ -58,7 +59,7 @@ export const ClientProfilePage = () => {
                 <td className="p-2 flex gap-2">
                   <button
                     className="bg-[#5048E5] text-white px-2 py-1 rounded cursor-pointer"
-                    onClick={handleProject}
+                    onClick={() => handleProject(client._id)}
                   >
                     Add Project
                   </button>

@@ -61,7 +61,7 @@ const AppRouter = () => {
           }
         />
         <Route
-          path="/add-project"
+          path="/add-project/:clientId"
           element={
             <SecureRoute>
               <AddProjectForm />

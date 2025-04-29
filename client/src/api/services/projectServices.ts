@@ -21,6 +21,15 @@ interface ApiProject {
   deadline: string;
   status: "pending" | "in-progress" | "completed";
 }
+
+interface ProjectPayload {
+  clientId: string;
+  title: string;
+  budget: string;
+  deadline: string;
+  status: string;
+}
+
 export const totalProjectsCount = async () => {
   try {
     const response = await http.get("/api/project/get-all-projects");
@@ -76,10 +85,12 @@ export const totalProjectStatus = async (): Promise<{
   }
 };
 
-
 export const getAllProjects = async (): Promise<Projects[]> => {
   try {
-    const response = await http.get<{ message: string; projects: ApiProject[] }>("/api/project/get-all-projects");
+    const response = await http.get<{
+      message: string;
+      projects: ApiProject[];
+    }>("/api/project/get-all-projects");
 
     return response.data.projects.map((project) => ({
       _id: project._id,
@@ -95,13 +106,22 @@ export const getAllProjects = async (): Promise<Projects[]> => {
   }
 };
 
-export const deleteProject=async(id:string) =>{
-  try{
-    const response=await http.delete(`/api/project/delete-project/${id}`)
+export const deleteProject = async (id: string) => {
+  try {
+    const response = await http.delete(`/api/project/delete-project/${id}`);
     return response.data;
-  }
-  catch(error){
+  } catch (error) {
     console.error("Delete error:", error);
     throw error;
   }
-}
+};
+
+export const createProject = async (data: ProjectPayload) => {
+  try {
+    const response = await http.post("/api/project/create-project", data);
+    return response;
+  } catch (error) {
+    console.error("Failed to create project:", error);
+    throw error;
+  }
+};

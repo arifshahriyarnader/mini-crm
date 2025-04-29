@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
+import { createProject } from "../api/services";
 
 export const AddProjectForm = () => {
+  const { clientId } = useParams<{ clientId: string }>();
   const [formData, setFormData] = useState({
     title: "",
     budget: "",
@@ -23,9 +25,27 @@ export const AddProjectForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log("Project form submitted", formData);
-    
-    navigate("/projects");
+    if (!clientId) {
+      alert("Client ID is missing");
+      return;
+    }
+
+    try {
+      const payload = {
+        ...formData,
+        clientId,
+      };
+      const response = await createProject(payload);
+      if (response?.status === 201) {
+        alert("Project added successfuly");
+        navigate("/projects");
+      } else {
+        alert("Project addded failed");
+      }
+    } catch (error) {
+      console.log(error);
+      alert("Failed to create project");
+    }
   };
 
   return (
@@ -88,7 +108,7 @@ export const AddProjectForm = () => {
 
           <button
             type="submit"
-            className="w-full bg-[#5048E5] hover:bg-indigo-700 text-white py-2 px-4 rounded-md"
+            className="w-full cursor-pointer bg-[#5048E5] hover:bg-indigo-700 text-white py-2 px-4 rounded-md"
           >
             Add Project
           </button>
