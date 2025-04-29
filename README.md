@@ -134,7 +134,7 @@
 - I will use libraries like `Recharts` or `Chart.js` for advanced visualization to show project statistics or earnings graphs. 
 
 ## Folder/Module Structure
-    ```
+
     server/
         src/
         routes/
@@ -155,7 +155,7 @@
         components/
         pages/
         router/
-    ```
+    
 
 ## Final Notes
 - Code is modular and easy to maintain.
