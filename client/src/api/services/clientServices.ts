@@ -74,3 +74,13 @@ export const deleteClient = async (id: string) => {
     throw error;
   }
 };
+
+export const clientProfile= async(id: string) =>{
+  try{
+    const response= await http.get(`/api/client/client/${id}`)
+    return response.data;
+  }
+  catch(error){
+    console.error("Client Profile Error:", error)
+  }
+}

@@ -43,8 +43,8 @@ export const ClientTable: React.FC<ClientTableProps> = ({
     }
   };
 
-  const handleClientProfile = () => {
-    navigate("/client-profile");
+  const handleClientProfile = async (id: string) => {
+    navigate(`/client-profile/${id}`);
   };
 
   return (
@@ -73,7 +73,7 @@ export const ClientTable: React.FC<ClientTableProps> = ({
               <td className="p-2 flex gap-2">
                 <button
                   className="bg-[#5048E5] text-white px-2 py-1 rounded cursor-pointer"
-                  onClick={handleClientProfile}
+                  onClick={() => handleClientProfile(client._id)}
                 >
                   View
                 </button>

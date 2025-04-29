@@ -44,7 +44,7 @@ const AppRouter = () => {
             </SecureRoute>
           }
         />
-        <Route path="/client-profile" element={<SecureRoute><ClientProfilePage /></SecureRoute>} />
+        <Route path="/client-profile/:id" element={<SecureRoute><ClientProfilePage /></SecureRoute>} />
         <Route
           path="/projects"
           element={
