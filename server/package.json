@@ -4,7 +4,8 @@
   "main": "./src/server.ts",
   "scripts": {
     "dev": "nodemon",
-    "start": "node .",
+    "build": "tsc",
+    "start": "node dist/server.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write src",
@@ -29,7 +30,7 @@
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
     "@types/jsonwebtoken": "^9.0.9",
-    "@types/node": "^22.14.1",
+    "@types/node": "^22.15.3",
     "@typescript-eslint/eslint-plugin": "^8.31.0",
     "@typescript-eslint/parser": "^8.31.0",
     "eslint": "^9.25.1",
