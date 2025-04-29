@@ -14,6 +14,8 @@ interface Project {
 
 export const Projects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     fetchAllProjects();
@@ -21,17 +23,29 @@ export const Projects = () => {
 
   const fetchAllProjects = async () => {
     try {
+      setLoading(true);
       const data = await getAllProjects();
       setProjects(data);
     } catch (error) {
+      setError("Failed to load projects");
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
+
+  if (loading) return <div>Loading clients...</div>;
+  if (error) return <div>{error}</div>;
+
   return (
     <Layout title="Projects">
-      <div>
+      {projects.length > 0 ? (
         <ProjectTable projects={projects} />
-      </div>
+      ) : (
+        <div className="text-center py-8">
+          <p>No projects found</p>
+        </div>
+      )}
     </Layout>
   );
 };
