@@ -8,6 +8,7 @@ import {
   ProjectsPage,
   SignupPage,
   AddClientFormPage,
+  ClientProfilePage,
 } from "../pages";
 
 import SecureRoute from "./SecureRoute";
@@ -43,6 +44,7 @@ const AppRouter = () => {
             </SecureRoute>
           }
         />
+        <Route path="/client-profile" element={<SecureRoute><ClientProfilePage /></SecureRoute>} />
         <Route
           path="/projects"
           element={
