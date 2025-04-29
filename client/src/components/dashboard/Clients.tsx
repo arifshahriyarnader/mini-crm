@@ -6,7 +6,7 @@ import { Layout } from "../../components/index";
 import { ClientTable } from "./ClientsTable";
 
 interface Client {
-  id: string;
+  _id: string;
   name: string;
   email: string;
   phone: string;
@@ -16,6 +16,8 @@ interface Client {
 
 export const Clients: React.FC = () => {
   const [clients, setClients] = useState<Client[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,19 +26,24 @@ export const Clients: React.FC = () => {
 
   const fetchAllClients = async () => {
     try {
-      const response = await getAllClients();
-     
-      setClients(response);
-      console.log("All Clients:", response);
-      return response
+      setLoading(true);
+      const data = await getAllClients();
+      console.log("fetch clients:...", data);
+      setClients(data);
     } catch (error) {
+      setError("Failed to load clients");
       console.error("Failed to fetch clients:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleClick = () => {
     navigate("/add-client");
   };
+
+  if (loading) return <div>Loading clients...</div>;
+  if (error) return <div>{error}</div>;
 
   return (
     <Layout title="Clients">
@@ -49,7 +56,13 @@ export const Clients: React.FC = () => {
           <span>Add Client</span>
         </button>
       </div>
-      <ClientTable clients={clients} setClients={setClients} />
+      {clients.length > 0 ? (
+        <ClientTable clients={clients} setClients={setClients} />
+      ) : (
+        <div className="text-center py-8">
+          <p>No clients found</p>
+        </div>
+      )}
     </Layout>
   );
 };

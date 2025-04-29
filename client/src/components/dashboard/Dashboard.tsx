@@ -14,11 +14,11 @@ export const Dashboard = () => {
   const [totalProjects, setTotalProjects] = useState(0);
   const [reminderDue, setReminderDue] = useState(0);
   const [projectStatus, setProjectStatus] = useState<{
-    counts: { pending: number; 'in-progress': number; completed: number };
+    counts: { pending: number; "in-progress": number; completed: number };
     total: number;
   }>({
-    counts: { pending: 0, 'in-progress': 0, completed: 0 },
-    total: 0
+    counts: { pending: 0, "in-progress": 0, completed: 0 },
+    total: 0,
   });
 
   useEffect(() => {
@@ -75,8 +75,8 @@ export const Dashboard = () => {
     } catch (error) {
       console.log("Failed to fetch project status", error);
       setProjectStatus({
-        counts: { pending: 0, 'in-progress': 0, completed: 0 },
-        total: 0
+        counts: { pending: 0, "in-progress": 0, completed: 0 },
+        total: 0,
       });
     }
   };
@@ -94,7 +94,7 @@ export const Dashboard = () => {
     if (item.title === "Projects by Status") {
       return {
         ...item,
-        value: `Pending: ${projectStatus.counts.pending}, In Progress: ${projectStatus.counts['in-progress']}, Completed: ${projectStatus.counts.completed}`
+        value: `Pending: ${projectStatus.counts.pending}, In Progress: ${projectStatus.counts["in-progress"]}, Completed: ${projectStatus.counts.completed}`,
       };
     }
     return item;
