@@ -1,7 +1,9 @@
 # Mini CRM for Freelancers
+**...**
     - This project is a Mini CRM (Client Relationship Management) system for freelancers to manage their clients, projects, interaction logs, and reminders.
 
-**Tech Stack Used**:
+## Tech Stack Used*
+**...**
     - Client: React JS, TypeScript, Tailwind CSS
     - Server: Node JS, Express JS, TypeScript
     - Database: MongoDB (Mongoose ORM)
@@ -106,7 +108,8 @@
 - createdAt
 - updatedAt
 
-**Summary of Approach**:
+## Summary of Approach
+**...**
     - Authentication: Implemented using JWT tokens with access and refresh tokens.
     - Modular Code Structure: Organized backend using routes, controllers, services, and   middlewares for scalability.
     - State Management: Managed frontend state locally in React components for simplicity.
@@ -115,7 +118,8 @@
     - Mobile Responsive UI: Built using Tailwind CSS for fast and clean designs.
 
 ## Sample Test User
-    **You can either sign up through the signup page, or use the following test credentials**: 
+**...**
+    1. You can either sign up through the signup page, or use the following test credentials
     ```bash
     Email: testuser@example.com
     Password: Test1234
@@ -154,10 +158,10 @@
         router/
 
 ## Final Notes
-    - Project is mobile responsive.
+**...**
     - Code is modular and easy to maintain.
     - The theme preference is persisted across sessions.
     - API is tested via Postman collections.
     - Future improvements can include advanced analytics on the dashboard.
 
-# Thank you
+# Thank You
