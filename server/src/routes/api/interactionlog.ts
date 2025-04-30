@@ -2,24 +2,15 @@ import { Router, Request, Response } from 'express';
 import { authenticateToken } from '../../middleware';
 import {
   createInteractionLogController,
-  getInteractionLogsByClientAndProjectController,
+  getAllInteractionsController,
 } from '../../controllers/interactionlog.controller';
 
 const router = Router();
 
 //create log
-router.post(
-  '/create-interactionlog',
-  authenticateToken,
-  authenticateToken,
-  createInteractionLogController
-);
+router.post('/create-interactionlog', authenticateToken, createInteractionLogController);
 
-//get logs both by clientId and projectId
-router.get(
-  '/get-interactionLog/:clientId/:projectId',
-  authenticateToken,
-  getInteractionLogsByClientAndProjectController
-);
+//get all logs
+router.get('/get-all-interactionlogs/', authenticateToken, getAllInteractionsController);
 
 export default router;

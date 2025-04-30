@@ -1,9 +1,6 @@
 import { create } from 'domain';
 import { Request, Response } from 'express';
-import {
-  createInterActionLog,
-  getInteractionLogsByClientAndProject,
-} from '../services/interactionLog.service';
+import { createInterActionLog, getAllInteractionLogs } from '../services/interactionLog.service';
 
 export const createInteractionLogController = async (
   req: Request,
@@ -33,14 +30,10 @@ export const createInteractionLogController = async (
   }
 };
 
-export const getInteractionLogsByClientAndProjectController = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const getAllInteractionsController = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { clientId, projectId } = req.params;
-    const logs = await getInteractionLogsByClientAndProject(clientId, projectId);
-    res.status(200).json({ message: 'Interaction log fetched successfully', logs });
+    const logs = await getAllInteractionLogs();
+    res.status(200).json({ message: 'All Interaction log fetched successfully', logs });
   } catch (error) {
     console.error('Error fetching logs:', error);
     res.status(500).json({ message: 'Server error' });

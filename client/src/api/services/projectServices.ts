@@ -152,10 +152,10 @@ export const createInteractions = async (data: InteractionPayload) => {
   }
 };
 
-export const getAllinteractions = async () => {
+export const getAllInteractions = async () => {
   try {
-    const response = http.get("/get-interactionLog/:clientId/:projectId");
-    return response;
+    const response = await http.get("/api/interactionlog/get-all-interactionlogs");
+    return  response.data.logs;
   } catch (error) {
     console.error("Failed to fetch interactions", error);
     throw error;

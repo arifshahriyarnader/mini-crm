@@ -1,6 +1,31 @@
+import { useEffect, useState } from "react";
 import { Layout } from "../../components/index";
+import { getAllInteractions } from "../../api/services";
+
+interface InteractionLog {
+  _id: string;
+  client: { name: string };
+  project: { title: string };
+  interactionType: string;
+  notes: string;
+  date: string;
+}
 
 export const Interactions = () => {
+  const [interactionLogs, setInteractionLogs] = useState<InteractionLog[]>([]);
+
+  useEffect(() => {
+    const fetchAllInteractionsLogs = async () => {
+      try {
+        const response = await getAllInteractions();
+        setInteractionLogs(response);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchAllInteractionsLogs();
+  }, []);
+
   return (
     <Layout title="Interactions">
       <div className="overflow-x-auto">
@@ -15,14 +40,19 @@ export const Interactions = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className="p-2"></td>
-              <td className="p-2"></td>
-              <td className="p-2 capitalize"></td>
-              <td className="p-2"></td>
-              <td className="p-2"></td>
-            </tr>
-          </tbody>
+              {interactionLogs.map((interaction) => (
+                <tr key={interaction._id}>
+                  <td className="p-2">{interaction.client?.name || 'N/A'}</td>
+                  <td className="p-2">{interaction.project?.title || 'N/A'}</td>
+                  <td className="p-2 capitalize">{interaction.interactionType}</td>
+                  <td className="p-2">{interaction.notes}</td>
+                  <td className="p-2">
+                    {new Date(interaction.date).toLocaleDateString()}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+
         </table>
       </div>
     </Layout>

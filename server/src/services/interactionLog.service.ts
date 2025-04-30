@@ -20,11 +20,9 @@ export const createInterActionLog = async (data: CreateInteractionLogInput) => {
   return await newLog.save();
 };
 
-export const getInteractionLogsByClientAndProject = async (clientId: string, projectId: string) => {
-  if (!clientId || !projectId) {
-    throw new Error('Both clientId and projectId are required');
-  }
-  const logs = await InteractionLog.find({ client: clientId, project: projectId }).populate("client", "name")
+export const getAllInteractionLogs = async () => {
+  
+  const logs = await InteractionLog.find().populate("client", "name")
   .populate("project", "title")
   .sort({
     date: -1,
