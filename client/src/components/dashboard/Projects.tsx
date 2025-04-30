@@ -3,8 +3,10 @@ import { Layout } from "../../components/index";
 import { ProjectTable } from "./ProjectsTable";
 import { getAllProjects } from "../../api/services";
 
+
 interface Project {
   _id: string;
+  clientId:string;
   clientName: string;
   title: string;
   budget: number;
@@ -25,6 +27,7 @@ export const Projects = () => {
     try {
       setLoading(true);
       const data = await getAllProjects();
+      
       setProjects(data);
     } catch (error) {
       setError("Failed to load projects");

@@ -6,6 +6,7 @@ interface Project {
 
 interface Projects {
   _id: string;
+  clientId: string;
   clientName: string;
   title: string;
   budget: number;
@@ -15,7 +16,10 @@ interface Projects {
 
 interface ApiProject {
   _id: string;
-  client: { _id: string; name: string };
+  client: {
+    _id: string;
+    name: string;
+  };
   title: string;
   budget: number;
   deadline: string;
@@ -28,6 +32,14 @@ interface ProjectPayload {
   budget: string;
   deadline: string;
   status: string;
+}
+
+interface InteractionPayload {
+  clientId: string;
+  projectId: string;
+  date: string;
+  interactionType: string;
+  notes: string;
 }
 
 export const totalProjectsCount = async () => {
@@ -94,6 +106,7 @@ export const getAllProjects = async (): Promise<Projects[]> => {
 
     return response.data.projects.map((project) => ({
       _id: project._id,
+      clientId: project.client._id,
       clientName: project.client.name,
       title: project.title,
       budget: project.budget,
@@ -122,6 +135,29 @@ export const createProject = async (data: ProjectPayload) => {
     return response;
   } catch (error) {
     console.error("Failed to create project:", error);
+    throw error;
+  }
+};
+
+export const createInteractions = async (data: InteractionPayload) => {
+  try {
+    const response = await http.post(
+      "/api/interactionlog/create-interactionlog",
+      data
+    );
+    return response;
+  } catch (error) {
+    console.error("Failed to create interface", error);
+    throw error;
+  }
+};
+
+export const getAllinteractions = async () => {
+  try {
+    const response = http.get("/get-interactionLog/:clientId/:projectId");
+    return response;
+  } catch (error) {
+    console.error("Failed to fetch interactions", error);
     throw error;
   }
 };

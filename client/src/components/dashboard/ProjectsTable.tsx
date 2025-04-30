@@ -4,8 +4,10 @@ import { FaEdit } from "react-icons/fa";
 import { FiTrash2 } from "react-icons/fi";
 import { deleteProject } from "../../api/services";
 
+
 interface Project {
   _id: string;
+  clientId:string;
   clientName: string;
   title: string;
   budget: number;
@@ -39,8 +41,8 @@ export const ProjectTable: React.FC<ProjectTableProps> = ({
     }
   };
 
-  const handleInteraction=() =>{
-    navigate("/add-interaction")
+  const handleInteraction=(clientId: string, projectId: string) =>{
+    navigate(`/add-interaction/${clientId}/${projectId}`)
   }
 
   return (
@@ -69,7 +71,7 @@ export const ProjectTable: React.FC<ProjectTableProps> = ({
               <td className="p-2 flex gap-2">
               <button
                   className="bg-[#5048E5] text-white px-2 py-1 rounded cursor-pointer"
-                  onClick={handleInteraction}
+                  onClick={()=>handleInteraction(project.clientId, project._id)}
                 >
                   Add Interaction
                 </button>

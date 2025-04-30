@@ -79,7 +79,7 @@ const AppRouter = () => {
           }
         />
          <Route
-          path="/add-interaction"
+          path="/add-interaction/:clientId/:projectId"
           element={
             <SecureRoute>
               <AddInteractionFormPage />

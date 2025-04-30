@@ -1,12 +1,15 @@
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useParams,useNavigate } from "react-router";
+import { createInteractions } from "../api/services";
 
 export const AddInteractionFormPage = () => {
+  const { clientId, projectId } = useParams<{ clientId: string; projectId: string }>();
   const [formData, setFormData] = useState({
     date: "",
     type: "call",
     notes: "",
   });
+  const navigate=useNavigate()
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -19,9 +22,32 @@ export const AddInteractionFormPage = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async(e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+    if (!clientId || !projectId) {
+      alert("Client ID or Project is missing");
+      return;
+    }
+    const payload = {
+      clientId,
+      projectId,
+      date: formData.date,
+      interactionType: formData.type,
+      notes: formData.notes,
+    };
+    try{
+    
+      const response=await createInteractions(payload)
+      if(response?.status === 201){
+        alert("Interaction added successfully")
+        navigate("/interactions")
+      }
+    }
+    catch(error){
+      console.error("Error submitting interaction:", error);
+    }
+
+    
   };
 
   return (
