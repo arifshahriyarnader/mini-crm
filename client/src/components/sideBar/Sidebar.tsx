@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import { sidebarLinks } from "../../constants";
 import { SidebarLink } from "../dashboard/index";
 
@@ -13,9 +14,11 @@ export const Sidebar = ({ darkMode }: SidebarProps) => {
       }`}
     >
       <nav className="flex flex-col gap-6">
-        <h2 className="text-2xl font-bold text-[#5048E5] mb-4">
-          FreelancerCRM
-        </h2>
+        <Link to="/dashboard">
+          <h2 className="text-2xl font-bold text-[#5048E5] mb-4">
+            FreelancerCRM
+          </h2>
+        </Link>
         {sidebarLinks.map((link) => (
           <SidebarLink
             key={link.title}

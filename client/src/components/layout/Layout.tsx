@@ -4,14 +4,18 @@ import { useNavigate } from "react-router";
 import { appConfig } from "../../common/config";
 import { authServices } from "../../auth";
 
-interface LayoutProps  {
+interface LayoutProps {
   title: string;
   children: ReactNode;
-};
+}
 
 export const Layout = ({ title, children }: LayoutProps) => {
   const [darkMode, setDarkMode] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [userName, setUserName] = useState("");
+
+  const [userAvatar, setUserAvatar] = useState<string | undefined>(undefined);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,6 +26,20 @@ export const Layout = ({ title, children }: LayoutProps) => {
     } else {
       setDarkMode(false);
       document.documentElement.classList.remove("dark");
+    }
+
+    const storedUser = localStorage.getItem(appConfig.CURRENT_USER_KEY);
+    if (storedUser) {
+      try {
+        const parsed = JSON.parse(storedUser);
+        const user = parsed.user;
+        console.log("User from localStorage:", parsed);
+        setUserName(user?.name || "");
+
+        setUserAvatar(user?.avatar || undefined);
+      } catch (error) {
+        console.error("Failed to parse user data from localStorage", error);
+      }
     }
   }, []);
 
@@ -49,7 +67,11 @@ export const Layout = ({ title, children }: LayoutProps) => {
   };
 
   return (
-    <div className={`flex min-h-screen ${darkMode ? "bg-gray-900" : "bg-gray-100"}`}>
+    <div
+      className={`flex min-h-screen ${
+        darkMode ? "bg-gray-900" : "bg-gray-100"
+      }`}
+    >
       <Sidebar darkMode={darkMode} />
       <div className="flex flex-col flex-1 text-gray-900 dark:text-gray-100">
         <Header
@@ -59,14 +81,12 @@ export const Layout = ({ title, children }: LayoutProps) => {
           showProfileMenu={showProfileMenu}
           toggleProfileMenu={toggleProfileMenu}
           handleLogout={handleLogout}
+          userName={userName}
+          userAvatar={userAvatar}
         />
 
-        <div className="p-6">
-          {children}
-        </div>
+        <div className="p-6">{children}</div>
       </div>
     </div>
   );
 };
-
-
