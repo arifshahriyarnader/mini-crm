@@ -10,6 +10,8 @@ import {
   AddClientFormPage,
   ClientProfilePage,
   AddProjectForm,
+  AddInteractionFormPage,
+  
 } from "../pages";
 
 import SecureRoute from "./SecureRoute";
@@ -73,6 +75,14 @@ const AppRouter = () => {
           element={
             <SecureRoute>
               <InteractionsPage />
+            </SecureRoute>
+          }
+        />
+         <Route
+          path="/add-interaction"
+          element={
+            <SecureRoute>
+              <AddInteractionFormPage />
             </SecureRoute>
           }
         />

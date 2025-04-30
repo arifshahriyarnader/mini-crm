@@ -7,4 +7,5 @@ export * from "./ClientProfilePage";
 export * from "./ProjectsPage";
 export * from "./AddProjectForm";
 export * from "./InteractionsPage";
+export * from  "./AddInteractionFormPage";
 export * from "./ReminderPage";

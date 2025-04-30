@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router";
 import { FaEdit } from "react-icons/fa";
 import { FiTrash2 } from "react-icons/fi";
 import { deleteProject } from "../../api/services";
@@ -21,6 +22,7 @@ export const ProjectTable: React.FC<ProjectTableProps> = ({
   projects,
   setProjects,
 }) => {
+  const navigate=useNavigate()
   const handleDelete = async (_id: string) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this project?"
@@ -36,6 +38,10 @@ export const ProjectTable: React.FC<ProjectTableProps> = ({
       alert("Failed to delete project");
     }
   };
+
+  const handleInteraction=() =>{
+    navigate("/add-interaction")
+  }
 
   return (
     <div className="overflow-x-auto">
@@ -61,6 +67,12 @@ export const ProjectTable: React.FC<ProjectTableProps> = ({
               <td className="p-2">{project.deadline}</td>
               <td className="p-2 capitalize">{project.status}</td>
               <td className="p-2 flex gap-2">
+              <button
+                  className="bg-[#5048E5] text-white px-2 py-1 rounded cursor-pointer"
+                  onClick={handleInteraction}
+                >
+                  Add Interaction
+                </button>
                 <button className="text-blue-500 cursor-pointer">
                   <FaEdit size={20} />
                 </button>
