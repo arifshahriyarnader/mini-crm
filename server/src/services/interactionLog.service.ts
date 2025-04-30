@@ -24,7 +24,9 @@ export const getInteractionLogsByClientAndProject = async (clientId: string, pro
   if (!clientId || !projectId) {
     throw new Error('Both clientId and projectId are required');
   }
-  const logs = await InteractionLog.find({ client: clientId, project: projectId }).sort({
+  const logs = await InteractionLog.find({ client: clientId, project: projectId }).populate("client", "name")
+  .populate("project", "title")
+  .sort({
     date: -1,
   });
   return logs;
