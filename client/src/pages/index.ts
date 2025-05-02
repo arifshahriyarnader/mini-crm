@@ -3,6 +3,7 @@ export * from "./LoginFormPage"
 export * from "./DashboardPage";
 export * from "./ClientsPage";
 export * from "./AddClientFormPage";
+export * from "./UpdateClientFormPage";
 export * from "./ClientProfilePage";
 export * from "./ProjectsPage";
 export * from "./AddProjectForm";

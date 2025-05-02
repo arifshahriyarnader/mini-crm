@@ -65,6 +65,22 @@ export const addClient = async (data: {
   }
 };
 
+export const updateClient = async (data: {
+  _id:string;
+  name: string;
+  email: string;
+  phone: string;
+  company?: string;
+  notes?: string;
+}) => {
+  try {
+    const response = await http.put(`/api/client/client/${data._id}`,data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const deleteClient = async (id: string) => {
   try {
     const response = await http.delete(`/api/client/delete-client/${id}`);
@@ -75,12 +91,11 @@ export const deleteClient = async (id: string) => {
   }
 };
 
-export const clientProfile= async(id: string) =>{
-  try{
-    const response= await http.get(`/api/client/client/${id}`)
+export const clientProfile = async (id: string) => {
+  try {
+    const response = await http.get(`/api/client/client/${id}`);
     return response.data;
+  } catch (error) {
+    console.error("Client Profile Error:", error);
   }
-  catch(error){
-    console.error("Client Profile Error:", error)
-  }
-}
+};

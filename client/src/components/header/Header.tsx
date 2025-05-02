@@ -36,7 +36,7 @@ export const Header = ({
       <div className="flex items-center gap-4 relative">
         <button
           onClick={toggleTheme}
-          className="p-2 bg-gray-200 dark:bg-gray-700 rounded-full hover:opacity-80 transition-opacity"
+          className="p-2 bg-gray-200 dark:bg-gray-700 cursor-pointer rounded-full hover:opacity-80 transition-opacity"
           aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
         >
           {darkMode ? (
@@ -49,7 +49,7 @@ export const Header = ({
         <div className="relative">
           <button
             onClick={toggleProfileMenu}
-            className={`flex items-center justify-center w-10 h-10 rounded-full ${
+            className={`flex cursor-pointer items-center justify-center w-10 h-10 rounded-full ${
               darkMode
                 ? "bg-gray-700 hover:bg-gray-600"
                 : "bg-gray-200 hover:bg-gray-300"
@@ -88,7 +88,7 @@ export const Header = ({
               <div className="border-t border-gray-200 dark:border-gray-700">
                 <button
                   onClick={handleLogout}
-                  className="flex items-center w-full px-4 py-3 text-sm text-left text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                  className="flex items-center w-full px-4 py-3 cursor-pointer text-sm text-left text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                 >
                   <FiLogOut className="mr-2" />
                   Sign out

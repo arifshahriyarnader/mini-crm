@@ -24,6 +24,11 @@ export const ClientTable: React.FC<ClientTableProps> = ({
 }) => {
   const navigate = useNavigate();
 
+  const handleEdit = async (_id: string) => {
+  navigate(`/update-client/${_id}`);
+};
+
+
   const handleDelete = async (_id: string) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this client?"
@@ -77,7 +82,7 @@ export const ClientTable: React.FC<ClientTableProps> = ({
                 >
                   View
                 </button>
-                <button className="text-blue-500 cursor-pointer">
+                <button className="text-blue-500 cursor-pointer" onClick={() => handleEdit(client._id)}>
                   <FaEdit size={20} />
                 </button>
 
