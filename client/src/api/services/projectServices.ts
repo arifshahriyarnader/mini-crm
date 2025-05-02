@@ -180,3 +180,15 @@ export const createReminder = async (data: ReminderPayload) => {
     throw error;
   }
 };
+
+
+export const getAllReminder=async() =>{
+  try{
+    const response= http.get("/api/reminder/get-reminder/due-this-week")
+    return (await response).data.reminders;
+  }
+  catch(error){
+    console.log("Failed to fetch all reminder", error)
+    throw error;
+  }
+}

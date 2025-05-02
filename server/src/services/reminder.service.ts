@@ -37,6 +37,8 @@ export const getRemindersDueThisWeek = async (userId: Types.ObjectId) => {
       $gte: today,
       $lte: endOfWeek,
     },
-  }).sort({ dueDate: 1 });
+  }).populate("client", "name")
+  .populate("project", "title")
+  .sort({ dueDate: 1 });
   return reminders;
 };
