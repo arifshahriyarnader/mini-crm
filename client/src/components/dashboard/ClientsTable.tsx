@@ -66,10 +66,10 @@ export const ClientTable: React.FC<ClientTableProps> = ({
             <tr key={client._id}>
               <td className="p-2">{index + 1}</td>
               <td className="p-2">{client.name}</td>
-              <td className="p-2">{client.email}</td>
-              <td className="p-2">{client.phone}</td>
-              <td className="p-2">{client.company}</td>
-              <td className="p-2">{client.notes}</td>
+              <td className="p-2 ">{client.email}</td>
+              <td className="p-2 ">{client.phone}</td>
+              <td className="p-2 ">{client.company}</td>
+              <td className="p-2 ">{client.notes}</td>
               <td className="p-2 flex gap-2">
                 <button
                   className="bg-[#5048E5] text-white px-2 py-1 rounded cursor-pointer"
@@ -77,7 +77,6 @@ export const ClientTable: React.FC<ClientTableProps> = ({
                 >
                   View
                 </button>
-
                 <button className="text-blue-500 cursor-pointer">
                   <FaEdit size={20} />
                 </button>

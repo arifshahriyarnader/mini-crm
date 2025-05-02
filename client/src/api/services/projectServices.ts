@@ -42,6 +42,13 @@ interface InteractionPayload {
   notes: string;
 }
 
+interface ReminderPayload {
+  clientId: string;
+  projectId: string;
+  message: string;
+  dueDate: string;
+}
+
 export const totalProjectsCount = async () => {
   try {
     const response = await http.get("/api/project/get-all-projects");
@@ -154,10 +161,22 @@ export const createInteractions = async (data: InteractionPayload) => {
 
 export const getAllInteractions = async () => {
   try {
-    const response = await http.get("/api/interactionlog/get-all-interactionlogs");
-    return  response.data.logs;
+    const response = await http.get(
+      "/api/interactionlog/get-all-interactionlogs"
+    );
+    return response.data.logs;
   } catch (error) {
     console.error("Failed to fetch interactions", error);
+    throw error;
+  }
+};
+
+export const createReminder = async (data: ReminderPayload) => {
+  try {
+    const response = await http.post("/api/reminder/create-reminder", data);
+    return response;
+  } catch (error) {
+    console.log("Failed to create reminder", error);
     throw error;
   }
 };

@@ -23,19 +23,11 @@ export const Dashboard = () => {
 
   useEffect(() => {
     fetchTotalClientsCount();
-  }, []);
-
-  useEffect(() => {
     fetchTotalProjectsCount();
-  }, []);
-
-  useEffect(() => {
     fetchReminder();
-  }, []);
-
-  useEffect(() => {
     fetchTotalProjectStatus();
   }, []);
+
   const fetchTotalClientsCount = async () => {
     try {
       const response = await getAllTotalClients();
@@ -102,16 +94,18 @@ export const Dashboard = () => {
 
   return (
     <Layout title="Dashboard">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-        {summaryData.map((item, index) => (
-          <SummaryCard
-            key={index}
-            title={item.title}
-            value={item.value || "N/A"}
-            buttonText={item.buttonText}
-            route={item.route}
-          />
-        ))}
+      <div className="px-4 py-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+          {summaryData.map((item, index) => (
+            <SummaryCard
+              key={index}
+              title={item.title}
+              value={item.value || "N/A"}
+              buttonText={item.buttonText}
+              route={item.route}
+            />
+          ))}
+        </div>
       </div>
     </Layout>
   );

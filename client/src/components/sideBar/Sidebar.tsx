@@ -2,7 +2,7 @@ import { Link } from "react-router";
 import { sidebarLinks } from "../../constants";
 import { SidebarLink } from "../dashboard/index";
 
-type SidebarProps = {
+interface SidebarProps {
   darkMode: boolean;
 };
 

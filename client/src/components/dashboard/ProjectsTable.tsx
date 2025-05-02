@@ -4,10 +4,9 @@ import { FaEdit } from "react-icons/fa";
 import { FiTrash2 } from "react-icons/fi";
 import { deleteProject } from "../../api/services";
 
-
 interface Project {
   _id: string;
-  clientId:string;
+  clientId: string;
   clientName: string;
   title: string;
   budget: number;
@@ -24,7 +23,7 @@ export const ProjectTable: React.FC<ProjectTableProps> = ({
   projects,
   setProjects,
 }) => {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const handleDelete = async (_id: string) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this project?"
@@ -41,9 +40,13 @@ export const ProjectTable: React.FC<ProjectTableProps> = ({
     }
   };
 
-  const handleInteraction=(clientId: string, projectId: string) =>{
-    navigate(`/add-interaction/${clientId}/${projectId}`)
-  }
+  const handleInteraction = (clientId: string, projectId: string) => {
+    navigate(`/add-interaction/${clientId}/${projectId}`);
+  };
+
+  const handleReminder = (clientId: string, projectId: string) => {
+    navigate(`/add-reminder/${clientId}/${projectId}`);
+  };
 
   return (
     <div className="overflow-x-auto">
@@ -69,11 +72,19 @@ export const ProjectTable: React.FC<ProjectTableProps> = ({
               <td className="p-2">{project.deadline}</td>
               <td className="p-2 capitalize">{project.status}</td>
               <td className="p-2 flex gap-2">
-              <button
+                <button
                   className="bg-[#5048E5] text-white px-2 py-1 rounded cursor-pointer"
-                  onClick={()=>handleInteraction(project.clientId, project._id)}
+                  onClick={() =>
+                    handleInteraction(project.clientId, project._id)
+                  }
                 >
                   Add Interaction
+                </button>
+                <button
+                  className="bg-[#5048E5] text-white px-2 py-1 rounded cursor-pointer"
+                  onClick={() => handleReminder(project.clientId, project._id)}
+                >
+                  Add Reminder
                 </button>
                 <button className="text-blue-500 cursor-pointer">
                   <FaEdit size={20} />
