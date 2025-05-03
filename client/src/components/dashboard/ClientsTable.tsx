@@ -53,7 +53,8 @@ export const ClientTable: React.FC<ClientTableProps> = ({
   };
 
   return (
-    <div className="overflow-x-auto">
+    <>
+    <div className="hidden sm:block overflow-x-auto">
       <table className="min-w-full bg-white border border-gray-300">
         <thead>
           <tr>
@@ -98,5 +99,46 @@ export const ClientTable: React.FC<ClientTableProps> = ({
         </tbody>
       </table>
     </div>
+
+
+
+      {/* Card layout for small screens */}
+      <div className="sm:hidden space-y-4">
+        {clients.map((client, index) => (
+          <div
+            key={client._id}
+            className="border border-gray-300 p-4 rounded shadow bg-white"
+          >
+            <p><strong>Serial No:</strong> {index + 1}</p>
+            <p><strong>Name:</strong> {client.name}</p>
+            <p><strong>Email:</strong> {client.email}</p>
+            <p><strong>Phone:</strong> {client.phone}</p>
+            <p><strong>Company:</strong> {client.company}</p>
+            <p><strong>Notes:</strong> {client.notes}</p>
+            <div className="flex gap-3 mt-3">
+              <button
+                className="bg-[#5048E5] text-white px-2 py-1 rounded"
+                onClick={() => handleClientProfile(client._id)}
+              >
+                View
+              </button>
+              <button
+                className="text-blue-500"
+                onClick={() => handleEdit(client._id)}
+              >
+                <FaEdit size={20} />
+              </button>
+              <button
+                className="text-red-500"
+                onClick={() => handleDelete(client._id)}
+              >
+                <FiTrash2 size={20} />
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+</>
+
   );
 };
