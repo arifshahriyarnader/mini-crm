@@ -26,7 +26,7 @@ export const Reminder = () => {
   }, []);
   return (
     <Layout title="Reminders">
-      <div className="overflow-x-auto">
+      <div className="hidden md:block overflow-x-auto">
         {reminders.length === 0 ? (
           <div className="text-center text-gray-500 py-8">
             You have no reminders
@@ -54,6 +54,39 @@ export const Reminder = () => {
               ))}
             </tbody>
           </table>
+        )}
+      </div>
+
+      {/* Mobile Card Layout */}
+      <div className="md:hidden space-y-4 px-4">
+        {reminders.length === 0 ? (
+          <div className="text-center text-gray-500 py-8">
+            You have no reminders
+          </div>
+        ) : (
+          reminders.map((reminder) => (
+            <div
+              key={reminder._id}
+              className="bg-white rounded-lg shadow-md p-4 border border-gray-200"
+            >
+              <p>
+                <span className="font-semibold">Client:</span>{" "}
+                {reminder.client?.name || "N/A"}
+              </p>
+              <p>
+                <span className="font-semibold">Project:</span>{" "}
+                {reminder.project?.title || "N/A"}
+              </p>
+              <p>
+                <span className="font-semibold">Message:</span>{" "}
+                {reminder.message}
+              </p>
+              <p>
+                <span className="font-semibold">Due Date:</span>{" "}
+                {new Date(reminder.dueDate).toLocaleDateString()}
+              </p>
+            </div>
+          ))
         )}
       </div>
     </Layout>
