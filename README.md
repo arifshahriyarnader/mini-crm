@@ -119,7 +119,7 @@
 ## Sample Test User
 1. You can either sign up through the signup page, or use the following test credentials
     ```
-    Email: testuser@example.com
+    Email: test@gmail.com
     Password: Test1234
     
 
