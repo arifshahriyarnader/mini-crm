@@ -36,7 +36,7 @@ export const ClientProfilePage = () => {
 
   return (
     <Layout title="Client Profile">
-      <div className="overflow-x-auto">
+      <div className="hidden sm:block overflow-x-auto">
         <table className="min-w-full bg-white border border-gray-300">
           <thead>
             <tr>
@@ -69,6 +69,37 @@ export const ClientProfilePage = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Card layout for small screens */}
+      {client && (
+        <div className="md:hidden p-4">
+          <div className="bg-white rounded-lg shadow-md p-4">
+            <p>
+              <strong>Name:</strong> {client.name}
+            </p>
+            <p>
+              <strong>Email:</strong> {client.email}
+            </p>
+            <p>
+              <strong>Phone:</strong> {client.phone}
+            </p>
+            <p>
+              <strong>Company:</strong> {client.company || "N/A"}
+            </p>
+            <p>
+              <strong>Notes:</strong> {client.notes || "N/A"}
+            </p>
+            <div className="mt-4">
+              <button
+                className="bg-[#5048E5] text-white px-4 py-2 rounded cursor-pointer"
+                onClick={() => handleProject(client._id)}
+              >
+                Add Project
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </Layout>
   );
 };
