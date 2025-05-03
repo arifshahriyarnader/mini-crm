@@ -6,6 +6,7 @@ import {
   deleteProjectController,
   getAllProjectsByClientIdController,
   getAllProjectsForAllClientsController,
+  getProjectByIdController,
   updateProjectController,
 } from '../../controllers/project.controller';
 
@@ -19,6 +20,9 @@ router.get('/get-all-projects/:clientId', authenticateToken, getAllProjectsByCli
 
 //get all projects
 router.get('/get-all-projects', authenticateToken, getAllProjectsForAllClientsController);
+
+//get project by project-id
+router.get("/get-project/:id", authenticateToken, getProjectByIdController);
 
 //update a project by id
 router.put('/update-project/:id', authenticateToken, updateProjectController);

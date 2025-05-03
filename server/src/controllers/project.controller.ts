@@ -4,6 +4,7 @@ import {
   deleteProject,
   getAllProjectsByClientId,
   getAllProjectsForAllClients,
+  getProjectById,
   updateProject,
 } from '../services/project.service';
 import Client from '../models/client.model';
@@ -81,10 +82,28 @@ export const getAllProjectsForAllClientsController = async (
   }
 };
 
+export const getProjectByIdController = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id: projectId } = req.params;
+
+    const project = await getProjectById(projectId, req.user!._id);
+
+    if (!project) {
+      res.status(404).json({ message: 'Project not found or unauthorized' });
+      return;
+    }
+
+    res.status(200).json({ project });
+  } catch (error) {
+    console.error('Error fetching project by ID:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 export const updateProjectController = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id: projectId } = req.params;
-    const { title, budget, deadline, status } = req.body;
+    const { title, budget, deadline, status} = req.body;
 
     const updatedProject = await updateProject(
       projectId,

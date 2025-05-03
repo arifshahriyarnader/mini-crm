@@ -66,7 +66,7 @@ export const addClient = async (data: {
 };
 
 export const updateClient = async (data: {
-  _id:string;
+  _id: string;
   name: string;
   email: string;
   phone: string;
@@ -74,7 +74,7 @@ export const updateClient = async (data: {
   notes?: string;
 }) => {
   try {
-    const response = await http.put(`/api/client/client/${data._id}`,data);
+    const response = await http.put(`/api/client/client/${data._id}`, data);
     return response.data;
   } catch (error) {
     console.log(error);

@@ -15,6 +15,7 @@ interface UpdateProjectInput {
   budget?: number;
   deadline?: Date;
   status?: string;
+  clientId?: string;
 }
 
 export const createProject = async (data: CreateProjectInput): Promise<IProject> => {
@@ -53,6 +54,26 @@ export const getAllProjectsForAllClients = async (userId: Types.ObjectId) => {
   return projects;
 };
 
+export const getProjectById = async (
+  projectId: string,
+  userId: string
+): Promise<IProject | null> => {
+  if (!Types.ObjectId.isValid(projectId)) {
+    throw new Error("Invalid projectId format");
+  }
+
+  const clients = await Client.find({ user: userId }).select("_id");
+  const clientIds = clients.map((client) => client._id);
+
+  const project = await Project.findOne({
+    _id: projectId,
+    client: { $in: clientIds },
+  }).populate("client");
+
+  return project;
+};
+
+
 export const updateProject = async (
   projectId: string,
   data: UpdateProjectInput,
@@ -72,6 +93,7 @@ export const updateProject = async (
       ...(data.budget && { budget: data.budget }),
       ...(data.deadline && { deadline: data.deadline }),
       ...(data.status && { status: data.status }),
+      ...(data.clientId && { client: data.clientId }), 
     },
     { new: true }
   ).populate('client');

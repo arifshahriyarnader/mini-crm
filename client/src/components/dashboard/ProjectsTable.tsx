@@ -24,6 +24,7 @@ export const ProjectTable: React.FC<ProjectTableProps> = ({
   setProjects,
 }) => {
   const navigate = useNavigate();
+
   const handleDelete = async (_id: string) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this project?"
@@ -47,6 +48,10 @@ export const ProjectTable: React.FC<ProjectTableProps> = ({
   const handleReminder = (clientId: string, projectId: string) => {
     navigate(`/add-reminder/${clientId}/${projectId}`);
   };
+
+  const handleEdit=async(clientId: string, projectId: string) =>{
+    navigate(`/update-project/${clientId}/${projectId}`)
+  }
 
   return (
     <div className="overflow-x-auto">
@@ -86,7 +91,9 @@ export const ProjectTable: React.FC<ProjectTableProps> = ({
                 >
                   Add Reminder
                 </button>
-                <button className="text-blue-500 cursor-pointer">
+                <button className="text-blue-500 cursor-pointer"
+                onClick={() => handleEdit(project.clientId, project._id)}
+                >
                   <FaEdit size={20} />
                 </button>
 

@@ -13,6 +13,7 @@ import {
   AddInteractionFormPage,
   AddReminderForm,
   UpdateClientFormPage,
+  UpdateProjectFormPage,
 } from "../pages";
 
 import SecureRoute from "./SecureRoute";
@@ -68,6 +69,14 @@ const AppRouter = () => {
           element={
             <SecureRoute>
               <AddProjectForm />
+            </SecureRoute>
+          }
+        />
+         <Route
+          path="/update-project/:clientId/:projectId"
+          element={
+            <SecureRoute>
+              <UpdateProjectFormPage />
             </SecureRoute>
           }
         />

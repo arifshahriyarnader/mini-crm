@@ -34,6 +34,15 @@ interface ProjectPayload {
   status: string;
 }
 
+interface Updateproject {
+  _id: string;
+  clientId: string;
+  title: string;
+  budget: string;
+  deadline: string;
+  status: string;
+}
+
 interface InteractionPayload {
   clientId: string;
   projectId: string;
@@ -146,6 +155,29 @@ export const createProject = async (data: ProjectPayload) => {
   }
 };
 
+export const getProjectById = async (id: string) => {
+  try {
+    const response = await http.get(`/api/project/get-project/${id}`);
+    return response.data.project;
+  } catch (error) {
+    console.error("Failed to fetch project by ID:", error);
+    throw error;
+  }
+};
+
+export const updateProject = async (data: Updateproject) => {
+  try {
+    const response = await http.put(
+      `/api/project/update-project/${data._id}`,
+      data
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Failed to create project:", error);
+    throw error;
+  }
+};
+
 export const createInteractions = async (data: InteractionPayload) => {
   try {
     const response = await http.post(
@@ -181,14 +213,12 @@ export const createReminder = async (data: ReminderPayload) => {
   }
 };
 
-
-export const getAllReminder=async() =>{
-  try{
-    const response= http.get("/api/reminder/get-reminder/due-this-week")
+export const getAllReminder = async () => {
+  try {
+    const response = http.get("/api/reminder/get-reminder/due-this-week");
     return (await response).data.reminders;
-  }
-  catch(error){
-    console.log("Failed to fetch all reminder", error)
+  } catch (error) {
+    console.log("Failed to fetch all reminder", error);
     throw error;
   }
-}
+};
