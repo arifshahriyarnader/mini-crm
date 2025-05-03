@@ -114,7 +114,7 @@ export const ProjectTable: React.FC<ProjectTableProps> = ({
         </table>
       </div>
 
-       {/* card layout for small devices */}     
+      {/* card layout for small devices */}
       <div className="block md:hidden space-y-4">
         {projects.map((project, index) => (
           <div
