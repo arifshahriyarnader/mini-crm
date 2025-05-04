@@ -1,8 +1,7 @@
 import React from "react";
+import { useNavigate } from "react-router";
 import { FaEdit } from "react-icons/fa";
 import { FiTrash2 } from "react-icons/fi";
-import { deleteClient, getAllClients } from "../../api/services";
-import { useNavigate } from "react-router";
 
 interface Client {
   _id: string;
@@ -16,35 +15,17 @@ interface Client {
 interface ClientTableProps {
   clients: Client[];
   setClients: React.Dispatch<React.SetStateAction<Client[]>>;
+  handleDelete: (_id: string) => Promise<void>;
 }
 
 export const ClientTable: React.FC<ClientTableProps> = ({
   clients,
-  setClients,
+  handleDelete,
 }) => {
   const navigate = useNavigate();
 
   const handleEdit = async (_id: string) => {
     navigate(`/update-client/${_id}`);
-  };
-
-  const handleDelete = async (_id: string) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this client?"
-    );
-
-    if (!confirmDelete) return;
-
-    try {
-      await deleteClient(_id);
-      setClients((prev) => prev.filter((client) => client._id !== _id));
-      alert("Client deleted successfully");
-    } catch (error) {
-      console.error("Delete error:", error);
-      alert("Failed to delete client. Please try again.");
-      const updatedClients = await getAllClients();
-      setClients(updatedClients);
-    }
   };
 
   const handleClientProfile = async (id: string) => {

@@ -1,42 +1,13 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { IoIosAddCircleOutline } from "react-icons/io";
-import { getAllClients } from "../../api/services";
 import { Layout } from "../../components/index";
 import { ClientTable } from "./ClientsTable";
-
-interface Client {
-  _id: string;
-  name: string;
-  email: string;
-  phone: string;
-  company: string;
-  notes: string;
-}
+import { useClient } from "../../hooks/useClient";
 
 export const Clients: React.FC = () => {
-  const [clients, setClients] = useState<Client[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const { clients, setClients, loading, error, handleDelete } = useClient();
+
   const navigate = useNavigate();
-
-  useEffect(() => {
-    fetchAllClients();
-  }, []);
-
-  const fetchAllClients = async () => {
-    try {
-      setLoading(true);
-      const data = await getAllClients();
-      console.log("fetch clients:...", data);
-      setClients(data);
-    } catch (error) {
-      setError("Failed to load clients");
-      console.error("Failed to fetch clients:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleClick = () => {
     navigate("/add-client");
@@ -57,7 +28,11 @@ export const Clients: React.FC = () => {
         </button>
       </div>
       {clients.length > 0 ? (
-        <ClientTable clients={clients} setClients={setClients} />
+        <ClientTable
+          clients={clients}
+          setClients={setClients}
+          handleDelete={handleDelete}
+        />
       ) : (
         <div className="text-center py-8">
           <p>No clients found</p>
