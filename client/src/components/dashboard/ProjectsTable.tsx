@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router";
 import { FaEdit } from "react-icons/fa";
 import { FiTrash2 } from "react-icons/fi";
-import { deleteProject } from "../../api/services";
+
 
 interface Project {
   _id: string;
@@ -17,29 +17,17 @@ interface Project {
 interface ProjectTableProps {
   projects: Project[];
   setProjects: React.Dispatch<React.SetStateAction<Project[]>>;
+  handleDelete: (_id: string) => Promise<void>;
 }
 
 export const ProjectTable: React.FC<ProjectTableProps> = ({
   projects,
-  setProjects,
+  handleDelete
+  
 }) => {
   const navigate = useNavigate();
 
-  const handleDelete = async (_id: string) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this project?"
-    );
-    if (!confirmDelete) return;
-
-    try {
-      await deleteProject(_id);
-      setProjects((prev) => prev.filter((project) => project._id !== _id));
-      alert("Project deleted successfully");
-    } catch (error) {
-      console.log(error);
-      alert("Failed to delete project");
-    }
-  };
+  
 
   const handleInteraction = (clientId: string, projectId: string) => {
     navigate(`/add-interaction/${clientId}/${projectId}`);
