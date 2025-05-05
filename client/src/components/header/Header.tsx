@@ -1,5 +1,8 @@
+import { useEffect, useState } from "react";
 import { FaMoon, FaSun } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
+import { IoIosNotifications } from "react-icons/io";
+import { getAllReminder } from "../../api/services";
 
 interface HeaderProps {
   title: string;
@@ -24,7 +27,21 @@ export const Header = ({
   //userEmail,
   userAvatar,
 }: HeaderProps) => {
+  const [reminderCount, setReminderCount] =useState(0)
   const userInitial = userName?.charAt(0).toUpperCase() || "U";
+
+  useEffect(() =>{
+    const fetchReminder=async() =>{
+      try{
+        const reminder=await getAllReminder()
+        setReminderCount(reminder.length)
+      }
+      catch(error){
+        console.error("Failed to load reminders", error);
+      }
+    }
+    fetchReminder()
+  }, [])
   return (
     <header
       className={`flex justify-between items-center px-6 py-4 shadow-md ${
@@ -44,7 +61,16 @@ export const Header = ({
           ) : (
             <FaSun className="text-gray-600" />
           )}
+
         </button>
+          <button className="cursor-pointer relative">
+          <IoIosNotifications size={24} />
+          {reminderCount > 0 && (
+          <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full px-1.5 py-0.5">
+            {reminderCount}
+          </span>
+        )}
+          </button>
 
         <div className="relative">
           <button
